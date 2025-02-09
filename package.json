@@ -30,6 +30,7 @@
 		"@atcute/bluesky-richtext-parser": "^1.0.7",
 		"@atcute/bluesky-richtext-segmenter": "^1.0.5",
 		"@atcute/client": "^2.0.7",
-		"@badrap/valita": "^0.4.2"
+		"@badrap/valita": "^0.4.2",
+		"hls.js": "^1.5.20"
 	}
 }

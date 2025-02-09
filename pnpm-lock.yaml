@@ -23,6 +23,9 @@ importers:
       '@badrap/valita':
         specifier: ^0.4.2
         version: 0.4.2
+      hls.js:
+        specifier: ^1.5.20
+        version: 1.5.20
     devDependencies:
       '@sveltejs/adapter-cloudflare':
         specifier: ^5.0.2
@@ -697,6 +700,9 @@ packages:
 
   glob-to-regexp@0.4.1:
     resolution: {integrity: sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw==}
+
+  hls.js@1.5.20:
+    resolution: {integrity: sha512-uu0VXUK52JhihhnN/MVVo1lvqNNuhoxkonqgO3IpjvQiGpJBdIXMGkofjQb/j9zvV7a1SW8U9g1FslWx/1HOiQ==}
 
   import-meta-resolve@4.1.0:
     resolution: {integrity: sha512-I6fiaX09Xivtk+THaMfAwnA3MVA5Big1WHF1Dfx9hFuvNIWpXnorlkzhcQf6ehrqQiiZECRt1poOAkPmer3ruw==}
@@ -1432,6 +1438,8 @@ snapshots:
       source-map: 0.6.1
 
   glob-to-regexp@0.4.1: {}
+
+  hls.js@1.5.20: {}
 
   import-meta-resolve@4.1.0: {}
 

@@ -12,4 +12,10 @@ declare global {
 	}
 }
 
+declare module 'svelte/elements' {
+	export interface AriaAttributes {
+		'aria-description'?: string;
+	}
+}
+
 export {};

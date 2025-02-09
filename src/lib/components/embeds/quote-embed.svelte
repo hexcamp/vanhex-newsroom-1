@@ -40,7 +40,7 @@
 	import RelativeTime from '$lib/components/islands/relative-time.svelte';
 
 	import ImageEmbed from './image-embed.svelte';
-	import VideoEmbed from './video-embed.svelte';
+	import VideoThumbnailEmbed from './video-thumbnail-embed.svelte';
 
 	interface Props {
 		embed: AppBskyEmbedRecord.ViewRecord;
@@ -94,7 +94,7 @@
 					</div>
 				{:else if video}
 					<div class="aside">
-						<VideoEmbed embed={video} blur={false} />
+						<VideoThumbnailEmbed embed={video} blur={false} />
 					</div>
 				{/if}
 			{/if}
@@ -109,7 +109,7 @@
 		{#if image}
 			<ImageEmbed embed={image} borderless blur={false} />
 		{:else if video}
-			<VideoEmbed embed={video} borderless blur={false} />
+			<VideoThumbnailEmbed embed={video} borderless blur={false} />
 		{/if}
 	{/if}
 </a>

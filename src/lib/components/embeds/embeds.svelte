@@ -35,7 +35,7 @@
 	import ListEmbed from './list-embed.svelte';
 	import QuoteEmbed from './quote-embed.svelte';
 	import StarterpackEmbed from './starterpack-embed.svelte';
-	import VideoEmbed from './video-embed.svelte';
+	import VideoStandaloneEmbed from './video-standalone-embed.svelte';
 
 	type Embed = NonNullable<AppBskyFeedDefs.PostView['embed']>;
 	type MediaEmbed = Brand.Union<AppBskyEmbedExternal.View | AppBskyEmbedImages.View | AppBskyEmbedVideo.View>;
@@ -66,7 +66,7 @@
 	{:else if embed.$type === 'app.bsky.embed.images#view'}
 		<ImageEmbed {embed} standalone />
 	{:else if embed.$type === 'app.bsky.embed.video#view'}
-		<VideoEmbed {embed} standalone />
+		<VideoStandaloneEmbed {embed} />
 	{:else}
 		{@render Message(`Unsupported media embed`)}
 	{/if}

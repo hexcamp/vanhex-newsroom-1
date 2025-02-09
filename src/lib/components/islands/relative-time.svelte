@@ -2,7 +2,7 @@
 	import { dev } from '$app/environment';
 	import { base } from '$app/paths';
 
-	import { formatLongDate, formatRelativeTime } from '$lib/utils/intl/date';
+	import { formatLongDate, formatRelativeTime, formatShortDate } from '$lib/utils/intl/date';
 
 	import Island from '../island.svelte';
 
@@ -22,7 +22,7 @@
 {:else}
 	<Island scriptUrl="{base}/_scripts/relative-time.js">
 		<time class="isl-relative-time" title={formatLongDate(date.getTime())} datetime={date.toISOString()}>
-			{formatRelativeTime(date.getTime())}
+			{formatShortDate(date.getTime())}
 		</time>
 	</Island>
 {/if}

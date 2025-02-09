@@ -67,7 +67,7 @@
 		<div class="aside">
 			<a tabindex={-1} href={authorUrl} class="avatar-wrapper">
 				{#if author.avatar}
-					<img loading="lazy" src={author.avatar} alt="" class="avatar" />
+					<img loading="lazy" fetchpriority="low" src={author.avatar} alt="" class="avatar" />
 				{/if}
 			</a>
 

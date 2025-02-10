@@ -4,7 +4,7 @@ export interface PaginationResult {
 }
 
 const relative = (url: URL | undefined) => {
-	return url ? url.search + url.hash : undefined;
+	return url ? url.search + url.hash || '?' : undefined;
 };
 
 export const paginate = (url: URL, cursor?: string): PaginationResult => {

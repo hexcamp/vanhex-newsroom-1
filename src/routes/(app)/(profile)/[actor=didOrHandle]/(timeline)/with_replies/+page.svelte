@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import { PUBLIC_APP_NAME } from '$env/static/public';
 	import type { PageProps } from './$types';
@@ -11,6 +12,7 @@
 
 <svelte:head>
 	<title>@{data.profile.handle} — {PUBLIC_APP_NAME}</title>
+	<link rel="canonical" href="{base}/{data.profile.did}" />
 </svelte:head>
 
 <PageListing subject="timeline" root={!page.url.searchParams.get('cursor')} cursor={data.timeline.cursor}>

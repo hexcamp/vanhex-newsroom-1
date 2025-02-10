@@ -1,10 +1,12 @@
 <script lang="ts">
 	import type { AppBskyFeedPost } from '@atcute/client/lexicons';
 
+	import { base } from '$app/paths';
 	import { PUBLIC_APP_NAME } from '$env/static/public';
 	import type { PageProps } from './$types';
 
 	import { createThreadData } from '$lib/models/thread';
+	import { parseAtUri } from '$lib/types/at-uri';
 	import { truncateMiddle, truncateRight } from '$lib/utils/strings';
 
 	import MainPost from '$lib/components/threads/main-post.svelte';
@@ -30,6 +32,7 @@
 
 <svelte:head>
 	<title>{title}</title>
+	<link rel="canonical" href="{base}/{data.thread.post.author.did}/{parseAtUri(data.thread.post.uri).rkey}" />
 </svelte:head>
 
 <div class={['thread-page', treeView ? 'is-tree' : 'is-flat']}>

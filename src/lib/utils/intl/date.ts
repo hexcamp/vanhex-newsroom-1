@@ -1,9 +1,24 @@
+import { dev } from '$app/environment';
+
+const timezone = !dev ? 'UTC' : undefined;
+
 let startOfYear = 0;
 let endOfYear = 0;
 
-const fmtAbsoluteLong = new Intl.DateTimeFormat('en-US', { dateStyle: 'long', timeStyle: 'short' });
-const fmtAbsShortWithYear = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
-const fmtAbsShort = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
+const fmtAbsoluteLong = new Intl.DateTimeFormat('en-US', {
+	timeZone: timezone,
+	dateStyle: 'long',
+	timeStyle: 'short',
+});
+const fmtAbsShortWithYear = new Intl.DateTimeFormat('en-US', {
+	timeZone: timezone,
+	dateStyle: 'medium',
+});
+const fmtAbsShort = new Intl.DateTimeFormat('en-US', {
+	timeZone: timezone,
+	month: 'short',
+	day: 'numeric',
+});
 
 export const formatShortDate = (date: string | number): string => {
 	const inst = new Date(date);

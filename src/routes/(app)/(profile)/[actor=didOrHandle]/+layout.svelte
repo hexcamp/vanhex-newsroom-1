@@ -82,7 +82,7 @@
 
 	.banner {
 		grid-area: banner;
-		background: var(--bg-secondary);
+		background: var(--divider-md);
 		aspect-ratio: 3 / 1;
 		overflow: hidden;
 	}

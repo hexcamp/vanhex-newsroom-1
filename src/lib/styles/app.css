@@ -1,5 +1,5 @@
 :root {
-	--accent: #1d9bf0;
+	--accent: #1083fe;
 	--accent-text: #ffffff;
 
 	--text-primary: #0f1419;
@@ -8,12 +8,22 @@
 
 	--bg-slate: #e6ecf0;
 	--bg-primary: #ffffff;
-	--bg-secondary: #cfd9de;
 
 	--divider-sm: #eff3f4;
 	--divider-md: #cfd9de;
 
 	--tap: var(--text-primary);
+
+	@media (prefers-color-scheme: dark) {
+		--text-primary: #e7e9ea;
+		--text-blurb: #7b7b7b;
+
+		--bg-slate: #000000;
+		--bg-primary: #111215;
+
+		--divider-sm: #2f3336;
+		--divider-md: #333639;
+	}
 }
 
 :root {

@@ -1,7 +1,5 @@
 // @ts-check
 
-import { signal, effect } from './_lib/signals.js';
-
 let startOfYear = 0;
 let endOfYear = 0;
 
@@ -140,19 +138,17 @@ const formatRelativeTime = (date, now) => {
 		return;
 	}
 
-	const now = signal(Date.now());
-	setInterval(() => {
-		now.value = Date.now();
-	}, 60_000);
-
-	effect(() => {
-		const $now = now.value;
+	const update = () => {
+		const now = Date.now();
 
 		for (const node of nodes) {
 			const dt = node.dateTime;
 
-			node.textContent = formatRelativeTime(dt, $now);
+			node.textContent = formatRelativeTime(dt, now);
 			node.title = formatLongDate(dt);
 		}
-	});
+	};
+
+	update();
+	setInterval(update, 60_000);
 })();

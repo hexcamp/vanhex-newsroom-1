@@ -23,7 +23,7 @@
 	{#if large}
 		<img
 			loading="lazy"
-			src="https://ogcard.cdn.bsky.app/start/${creator.did}/${rkey}"
+			src="https://ogcard.cdn.bsky.app/start/{creator.did}/{rkey}"
 			alt=""
 			class="banner"
 		/>

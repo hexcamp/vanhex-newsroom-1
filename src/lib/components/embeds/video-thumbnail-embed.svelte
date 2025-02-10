@@ -29,7 +29,7 @@
 <style>
 	.video-thumbnail-embed {
 		position: relative;
-		background: var(--bg-secondary);
+		background: var(--bg-slate);
 		overflow: hidden;
 	}
 	.is-bordered {

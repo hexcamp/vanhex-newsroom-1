@@ -71,7 +71,7 @@
 		position: relative;
 		border: 1px solid var(--divider-md);
 		border-radius: 6px;
-		background: var(--bg-secondary);
+		background: var(--bg-slate);
 		overflow: hidden;
 
 		:global(iframe) {

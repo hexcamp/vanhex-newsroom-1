@@ -157,7 +157,7 @@
 	.image {
 		position: absolute;
 		inset: 0;
-		background: var(--bg-secondary);
+		background: var(--bg-slate);
 		width: 100%;
 		height: 100%;
 		object-fit: cover;

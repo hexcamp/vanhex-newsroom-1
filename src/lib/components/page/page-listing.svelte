@@ -3,23 +3,23 @@
 
 	interface Props {
 		subject: 'timeline' | 'posts' | 'profiles' | 'reposts' | 'likes';
-		root: boolean;
-		cursor: string | undefined;
+		rootUrl?: string;
+		nextUrl?: string;
 		children: Snippet<[]>;
 	}
 
-	const { subject, root, cursor, children }: Props = $props();
+	const { subject, rootUrl, nextUrl, children }: Props = $props();
 </script>
 
 <div class="page-listing">
-	{#if !root}
-		<a href="?" class="button latest-button">Show latest {subject}</a>
+	{#if rootUrl}
+		<a href={rootUrl} class="button latest-button">Show latest {subject}</a>
 	{/if}
 
 	{@render children()}
 
-	{#if cursor}
-		<a href="?cursor={encodeURIComponent(cursor)}" class="button more-button">
+	{#if nextUrl}
+		<a href={nextUrl} class="button more-button">
 			{subject === 'timeline' ? `Show older posts` : `Show more ${subject}`}
 		</a>
 	{:else}

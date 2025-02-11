@@ -41,6 +41,7 @@
 		display: flex;
 		align-items: center;
 		color: var(--text-blurb);
+		min-width: 0;
 	}
 	.has-bottom-gutter {
 		margin-bottom: 2px;

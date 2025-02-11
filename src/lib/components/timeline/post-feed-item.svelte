@@ -80,13 +80,17 @@
 				{@const parent = item.reply?.parent}
 
 				<p class="reply-context">
-					{#if parent && parent.$type === 'app.bsky.feed.defs#postView'}
+					{#if parent?.$type === 'app.bsky.feed.defs#postView'}
 						{@const author = parent.author}
 
 						Replying to
 						<a href="/{author.did}" dir="auto">
 							{author.displayName?.trim() || `@${author.handle}`}
 						</a>
+					{:else if parent?.$type === 'app.bsky.feed.defs#blockedPost'}
+						Replying to a blocked post
+					{:else if parent?.$type === 'app.bsky.feed.defs#notFoundPost'}
+						Replying to a deleted post
 					{:else}
 						Replying to an unknown post
 					{/if}

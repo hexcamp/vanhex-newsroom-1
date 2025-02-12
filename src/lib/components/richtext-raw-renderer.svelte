@@ -20,7 +20,7 @@
 				{token.raw.replace(HTTP_RE, '')}
 			</a>
 		{:else if token.type === 'mention'}
-			<a href="/{token.handle}" class="mention">{token.raw}</a>
+			<a href="/{token.handle.toLowerCase()}" class="mention">{token.raw}</a>
 		{:else if token.type === 'topic'}
 			<span class="hashtag">{token.raw}</span>
 		{:else}

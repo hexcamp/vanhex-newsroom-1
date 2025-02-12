@@ -40,7 +40,7 @@
 		<RichtextRenderer text={record.text} facets={record.facets} />
 
 		{#if post.embed}
-			<Embeds embed={post.embed} />
+			<Embeds {post} embed={post.embed} />
 		{/if}
 
 		<PostMetrics {post} />

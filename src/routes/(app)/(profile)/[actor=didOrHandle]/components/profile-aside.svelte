@@ -3,10 +3,11 @@
 
 	import { base } from '$app/paths';
 
+	import { findLabel, FlagsBlurMedia } from '$lib/moderation';
 	import { formatCompactNumber, formatLongNumber } from '$lib/utils/intl/number';
 
-	import RichtextRawRenderer from '$lib/components/richtext-raw-renderer.svelte';
 	import Avatar from '$lib/components/avatar.svelte';
+	import RichtextRawRenderer from '$lib/components/richtext-raw-renderer.svelte';
 
 	interface Props {
 		profile: AppBskyActorDefs.ProfileViewDetailed;
@@ -15,6 +16,8 @@
 	const { profile }: Props = $props();
 
 	const did = $derived(profile.did);
+
+	const blur = $derived(!!findLabel(profile.labels, profile.did, FlagsBlurMedia));
 </script>
 
 {#snippet Stat(count: number = 0, one: string, many: string, href: string)}
@@ -32,7 +35,7 @@
 {/snippet}
 
 <div class="profile-aside">
-	<Avatar {profile} size="xl" />
+	<Avatar {profile} size="xl" {blur} />
 
 	<div class="name-wrapper">
 		<p dir="auto" class="display-name">{profile.displayName?.trim() || profile.handle.slice(0, 64)}</p>

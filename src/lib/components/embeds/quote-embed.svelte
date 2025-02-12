@@ -35,10 +35,13 @@
 
 	import { base } from '$app/paths';
 
+	import { findLabel, FlagsBlurContent, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
 
 	import Avatar from '$lib/components/avatar.svelte';
 	import RelativeTime from '$lib/components/islands/relative-time.svelte';
+
+	import ContentHider from '../content-hider.svelte';
 
 	import ImageEmbed from './image-embed.svelte';
 	import VideoThumbnailEmbed from './video-thumbnail-embed.svelte';
@@ -59,57 +62,63 @@
 	const embed = $derived(quote.embeds?.[0]);
 	const image = $derived(getPostImage(embed));
 	const video = $derived(getPostVideo(embed));
+
+	const blurAvi = $derived(!!findLabel(author.labels, author.did, FlagsBlurMedia));
+	const blurContent = $derived(findLabel(quote.labels, author.did, FlagsBlurContent));
+	const blurMedia = $derived(!!findLabel(quote.labels, author.did, FlagsBlurMedia));
 </script>
 
-<a href="{base}/{author.did}/{parseAtUri(quote.uri).rkey}#main" class="quote-embed">
-	<div class="meta">
-		<Avatar profile={author} src={author.avatar} size="xs" />
+<ContentHider blur={blurContent}>
+	<a href="{base}/{author.did}/{parseAtUri(quote.uri).rkey}#main" class="quote-embed">
+		<div class="meta">
+			<Avatar profile={author} src={author.avatar} size="xs" blur={blurAvi} />
 
-		<span class="name-wrapper">
-			{#if authorName}
-				<bdi class="display-name-wrapper">
-					<span class="display-name">{authorName}</span>
-				</bdi>
-			{/if}
-
-			<span class="handle">@{author.handle}</span>
-		</span>
-
-		<span aria-hidden="true" class="dot">·</span>
-
-		<span class="date">
-			<RelativeTime date={record.createdAt} />
-		</span>
-	</div>
-
-	{#if text}
-		<div class="body">
-			{#if !large}
-				{#if image}
-					<div class="aside">
-						<ImageEmbed embed={image} blur={false} />
-					</div>
-				{:else if video}
-					<div class="aside">
-						<VideoThumbnailEmbed embed={video} blur={false} />
-					</div>
+			<span class="name-wrapper">
+				{#if authorName}
+					<bdi class="display-name-wrapper">
+						<span class="display-name">{authorName}</span>
+					</bdi>
 				{/if}
-			{/if}
 
-			<p class="text">{text}</p>
+				<span class="handle">@{author.handle}</span>
+			</span>
+
+			<span aria-hidden="true" class="dot">·</span>
+
+			<span class="date">
+				<RelativeTime date={record.createdAt} />
+			</span>
 		</div>
-	{:else}
-		<div class="divide"></div>
-	{/if}
 
-	{#if large || !text}
-		{#if image}
-			<ImageEmbed embed={image} borderless blur={false} />
-		{:else if video}
-			<VideoThumbnailEmbed embed={video} borderless blur={false} />
+		{#if text}
+			<div class="body">
+				{#if !large}
+					{#if image}
+						<div class="aside">
+							<ImageEmbed embed={image} blur={blurMedia} />
+						</div>
+					{:else if video}
+						<div class="aside">
+							<VideoThumbnailEmbed embed={video} blur={blurMedia} />
+						</div>
+					{/if}
+				{/if}
+
+				<p class="text">{text}</p>
+			</div>
+		{:else}
+			<div class="divide"></div>
 		{/if}
-	{/if}
-</a>
+
+		{#if large || !text}
+			{#if image}
+				<ImageEmbed embed={image} borderless blur={blurMedia} />
+			{:else if video}
+				<VideoThumbnailEmbed embed={video} borderless blur={blurMedia} />
+			{/if}
+		{/if}
+	</a>
+</ContentHider>
 
 <style>
 	.quote-embed {

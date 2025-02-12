@@ -11,12 +11,12 @@
 		blur?: boolean;
 	}
 
-	const { embed: video, borderless }: Props = $props();
+	const { embed: video, borderless, blur }: Props = $props();
 </script>
 
 <div class={['video-thumbnail-embed', !borderless && 'is-bordered']}>
 	<div class="constrainer">
-		<img loading="lazy" src={video.thumbnail} alt={video.alt} class="thumbnail" />
+		<img loading="lazy" src={video.thumbnail} alt={video.alt} class={['thumbnail', blur && 'is-blurred']} />
 
 		<div class="play">
 			<PlaySolid />
@@ -47,6 +47,10 @@
 		height: 100%;
 		object-fit: cover;
 		font-size: 0;
+	}
+	.is-blurred {
+		scale: 125%;
+		filter: blur(24px);
 	}
 
 	.play {

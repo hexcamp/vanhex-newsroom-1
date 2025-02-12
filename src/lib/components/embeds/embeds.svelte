@@ -27,7 +27,10 @@
 		Brand,
 	} from '@atcute/client/lexicons';
 
+	import { findLabel, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
+
+	import ContentHider from '../content-hider.svelte';
 
 	import ExternalEmbed from './external-embed.svelte';
 	import FeedEmbed from './feed-embed.svelte';
@@ -44,9 +47,10 @@
 	interface Props {
 		embed: Embed;
 		large?: boolean;
+		post?: AppBskyFeedDefs.PostView;
 	}
 
-	const { embed, large = false }: Props = $props();
+	const { embed, large = false, post }: Props = $props();
 </script>
 
 <div class="embeds">
@@ -61,15 +65,19 @@
 </div>
 
 {#snippet Media(embed: MediaEmbed)}
-	{#if embed.$type === 'app.bsky.embed.external#view'}
-		<ExternalEmbed {embed} />
-	{:else if embed.$type === 'app.bsky.embed.images#view'}
-		<ImageEmbed {embed} standalone />
-	{:else if embed.$type === 'app.bsky.embed.video#view'}
-		<VideoStandaloneEmbed {embed} />
-	{:else}
-		{@render Message(`Unsupported media embed`)}
-	{/if}
+	{@const blur = post && findLabel(post.labels, post.author.did, FlagsBlurMedia)}
+
+	<ContentHider {blur}>
+		{#if embed.$type === 'app.bsky.embed.external#view'}
+			<ExternalEmbed {embed} />
+		{:else if embed.$type === 'app.bsky.embed.images#view'}
+			<ImageEmbed {embed} standalone />
+		{:else if embed.$type === 'app.bsky.embed.video#view'}
+			<VideoStandaloneEmbed {embed} />
+		{:else}
+			{@render Message(`Unsupported media embed`)}
+		{/if}
+	</ContentHider>
 {/snippet}
 
 {#snippet Record(embed: RecordEmbed)}

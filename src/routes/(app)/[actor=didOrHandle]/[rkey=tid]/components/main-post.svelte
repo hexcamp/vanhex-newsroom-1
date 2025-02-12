@@ -52,7 +52,7 @@
 	<RichTextRenderer text={record.text} facets={record.facets} large />
 
 	{#if post.embed}
-		<Embeds embed={post.embed} large />
+		<Embeds {post} embed={post.embed} large />
 	{/if}
 
 	<div class="footer">

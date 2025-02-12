@@ -16,6 +16,7 @@
 
 	import { base } from '$app/paths';
 
+	import { findLabel, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
 
 	import Avatar from '$lib/components/avatar.svelte';
@@ -27,11 +28,13 @@
 	const { embed: list }: Props = $props();
 
 	const creator = $derived(list.creator);
+
+	const blurAvi = $derived(!!findLabel(list.labels, creator.did, FlagsBlurMedia));
 </script>
 
 <a href="{base}/{creator.did}/lists/{parseAtUri(list.uri).rkey}" class="list-embed">
 	<div class="main">
-		<Avatar type="list" src={list.avatar} />
+		<Avatar type="list" src={list.avatar} blur={blurAvi} />
 
 		<div class="info">
 			<p class="name">{list.name}</p>

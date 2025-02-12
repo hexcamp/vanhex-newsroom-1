@@ -3,6 +3,7 @@
 
 	import { base } from '$app/paths';
 
+	import { findLabel, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
 
 	import Avatar from '$lib/components/avatar.svelte';
@@ -14,11 +15,13 @@
 	const { embed: feed }: Props = $props();
 
 	const creator = $derived(feed.creator);
+
+	const blurAvi = $derived(!!findLabel(feed.labels, creator.did, FlagsBlurMedia));
 </script>
 
 <a href="{base}/{creator.did}/feeds/{parseAtUri(feed.uri).rkey}" class="feed-embed">
 	<div class="main">
-		<Avatar type="generator" src={feed.avatar} />
+		<Avatar type="generator" src={feed.avatar} blur={blurAvi} />
 
 		<div class="info">
 			<p class="name">{feed.displayName}</p>

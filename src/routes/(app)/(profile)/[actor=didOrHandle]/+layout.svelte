@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { formatCompactNumber } from '$lib/utils/intl/number';
 	import type { LayoutProps } from './$types';
+
+	import { findLabel, FlagsBlurMedia } from '$lib/moderation';
+	import { formatCompactNumber } from '$lib/utils/intl/number';
 
 	import ProfileAside from './components/profile-aside.svelte';
 
@@ -11,13 +13,19 @@
 	const did = $derived(profile.did);
 
 	const postCount = $derived(profile.postsCount ?? 0);
+	const blurBanner = $derived(!!findLabel(profile.labels, profile.did, FlagsBlurMedia));
 </script>
 
 {#key profile.did}
 	<div class="profile-layout">
 		<div class="banner">
 			{#if profile.banner}
-				<img loading="lazy" src={profile.banner} alt="" class="banner-image" />
+				<img
+					loading="lazy"
+					src={profile.banner}
+					alt=""
+					class={['banner-image', blurBanner && 'is-blurred']}
+				/>
 			{/if}
 		</div>
 
@@ -90,6 +98,10 @@
 		width: 100%;
 		height: 100%;
 		font-size: 0;
+	}
+	.is-blurred {
+		scale: 125%;
+		filter: blur(24px);
 	}
 
 	.aside {

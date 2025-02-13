@@ -2,7 +2,7 @@
 	import type { Snippet } from 'svelte';
 
 	interface Props {
-		subject: 'timeline' | 'posts' | 'profiles' | 'reposts' | 'likes';
+		subject: 'timeline' | 'posts' | 'profiles' | 'reposts' | 'likes' | 'feeds' | 'lists';
 		rootUrl?: string;
 		nextUrl?: string;
 		children: Snippet<[]>;

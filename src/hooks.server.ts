@@ -8,7 +8,7 @@ export const handleError: HandleServerError = async ({ error, event, status, mes
 		switch (error.kind) {
 			case 'InternalServerError': {
 				return {
-					message: `Upstream server returned an internal server error`,
+					message: `Upstream server returned an internal error`,
 				};
 			}
 		}

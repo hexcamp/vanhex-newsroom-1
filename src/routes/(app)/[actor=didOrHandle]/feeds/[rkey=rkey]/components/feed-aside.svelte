@@ -1,0 +1,88 @@
+<script lang="ts">
+	import type { AppBskyFeedDefs } from '@atcute/client/lexicons';
+
+	import { base } from '$app/paths';
+
+	import { parseAtUri } from '$lib/types/at-uri';
+	import { formatLongNumber } from '$lib/utils/intl/number';
+
+	import Avatar from '$lib/components/avatar.svelte';
+	import RichtextRenderer from '$lib/components/richtext-renderer.svelte';
+
+	interface Props {
+		feed: AppBskyFeedDefs.GeneratorView;
+	}
+
+	const { feed }: Props = $props();
+
+	const creatorUrl = $derived(`${base}/${feed.creator.did}`);
+	const feedUrl = $derived(`${creatorUrl}/feeds/${parseAtUri(feed.uri).rkey}`);
+</script>
+
+<div class="feed-aside">
+	<Avatar type="generator" src={feed.avatar} size="xl" />
+
+	<p dir="auto" class="display-name">{feed.displayName?.trim()}</p>
+
+	<RichtextRenderer text={feed.description ?? ''} facets={feed.descriptionFacets} />
+
+	<p class="metric">
+		<a href="{feedUrl}/likes" class="metric-link">
+			{feed.likeCount === 1
+				? `Liked by ${formatLongNumber(feed.likeCount)} user`
+				: `Liked by ${formatLongNumber(feed.likeCount ?? 0)} users`}
+		</a>
+	</p>
+
+	<div class="creator">
+		<Avatar profile={feed.creator} size="xs" href={creatorUrl} />
+		<a href={creatorUrl} class="handle">{feed.creator.handle}</a>
+	</div>
+</div>
+
+<style>
+	.feed-aside {
+		display: flex;
+		flex-direction: column;
+		background: var(--bg-primary);
+		padding: 16px;
+		min-width: 0;
+	}
+
+	.display-name {
+		margin: 16px 0 4px 0;
+		font-weight: 700;
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+		overflow-wrap: break-word;
+	}
+
+	.metric {
+		margin: 12px 0 0 0;
+		color: var(--text-blurb);
+		font-size: 0.8125rem;
+		line-height: 1.25rem;
+	}
+	.metric-link {
+		color: inherit;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	.creator {
+		display: flex;
+		gap: 8px;
+		margin: 16px 0 0 0;
+		color: var(--text-blurb);
+		font-weight: 500;
+	}
+	.handle {
+		color: inherit;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+</style>

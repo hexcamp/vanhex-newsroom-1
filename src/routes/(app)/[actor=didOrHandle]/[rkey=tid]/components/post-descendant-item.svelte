@@ -27,7 +27,7 @@
 	const authorUrl = $derived(`${base}/${author.did}`);
 
 	const record = $derived(post.record as AppBskyFeedPost.Record);
-	const postUrl = $derived(`${base}/${author.did}/${parseAtUri(post.uri).rkey}`);
+	const postUrl = $derived(`${base}/${author.did}/${parseAtUri(post.uri).rkey}#main`);
 </script>
 
 <details open={!defaultCollapsed} class="post-descendant-item">

@@ -18,7 +18,6 @@
 
 <svelte:head>
 	<title>@{data.profile.handle} — {PUBLIC_APP_NAME}</title>
-	<link rel="canonical" href="{base}/{data.profile.did}" />
 </svelte:head>
 
 <PageListing subject="timeline" {rootUrl} {nextUrl}>

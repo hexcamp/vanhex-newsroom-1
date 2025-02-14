@@ -19,7 +19,6 @@
 
 <svelte:head>
 	<title>Users followed by @{data.profile.handle} — {PUBLIC_APP_NAME}</title>
-	<link rel="canonical" href="{base}/{data.profile.did}" />
 </svelte:head>
 
 <PageHeader title="Following" />

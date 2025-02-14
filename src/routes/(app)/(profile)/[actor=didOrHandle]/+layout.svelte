@@ -16,6 +16,10 @@
 	const blurBanner = $derived(!!findLabel(profile.labels, profile.did, FlagsBlurMedia));
 </script>
 
+<svelte:head>
+	<link rel="canonical" href="{base}/{data.profile.did}" />
+</svelte:head>
+
 {#key profile.did}
 	<div class="profile-layout">
 		<div class="banner">

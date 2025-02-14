@@ -3,11 +3,16 @@ export interface PaginationResult {
 	nextUrl: string | undefined;
 }
 
-const relative = (url: URL | undefined) => {
-	return url ? url.search + url.hash || '?' : undefined;
+const relative = (url: URL | undefined, canonicalPath?: string): string | undefined => {
+	if (!url) {
+		return undefined;
+	}
+
+	const queryAndHash = url.search + url.hash;
+	return canonicalPath ? canonicalPath + queryAndHash : queryAndHash;
 };
 
-export const paginate = (url: URL, cursor?: string): PaginationResult => {
+export const paginate = (url: URL, cursor?: string, canonicalPath?: string): PaginationResult => {
 	let rootUrl: URL | undefined;
 	let nextUrl: URL | undefined;
 
@@ -22,7 +27,7 @@ export const paginate = (url: URL, cursor?: string): PaginationResult => {
 	}
 
 	return {
-		rootUrl: relative(rootUrl),
-		nextUrl: relative(nextUrl),
+		rootUrl: relative(rootUrl, canonicalPath),
+		nextUrl: relative(nextUrl, canonicalPath),
 	};
 };

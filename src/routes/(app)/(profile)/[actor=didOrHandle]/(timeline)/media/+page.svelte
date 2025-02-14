@@ -11,7 +11,9 @@
 
 	const { data }: PageProps = $props();
 
-	const { rootUrl, nextUrl } = $derived(paginate(page.url, data.timeline.cursor));
+	const { rootUrl, nextUrl } = $derived(
+		paginate(page.url, data.timeline.cursor, `${base}/${data.profile.did}/media`),
+	);
 </script>
 
 <svelte:head>

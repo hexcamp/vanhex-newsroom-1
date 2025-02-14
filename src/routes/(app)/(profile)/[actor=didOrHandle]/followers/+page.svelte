@@ -12,7 +12,9 @@
 
 	const { data }: PageProps = $props();
 
-	const { rootUrl, nextUrl } = $derived(paginate(page.url, data.followers.cursor));
+	const { rootUrl, nextUrl } = $derived(
+		paginate(page.url, data.followers.cursor, `${base}/${data.profile.did}/followers`),
+	);
 </script>
 
 <svelte:head>

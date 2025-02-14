@@ -75,11 +75,15 @@
 		display: flex;
 		gap: 8px;
 		margin: 16px 0 0 0;
+		min-width: 0;
 		color: var(--text-blurb);
 		font-weight: 500;
 	}
 	.handle {
+		overflow: hidden;
 		color: inherit;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 
 		&:hover {
 			text-decoration: underline;

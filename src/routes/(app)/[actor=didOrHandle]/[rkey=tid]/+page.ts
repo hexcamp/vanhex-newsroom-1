@@ -1,4 +1,6 @@
 import { simpleFetchHandler, XRPC, XRPCError } from '@atcute/client';
+import type { AppBskyFeedGetPostThread } from '@atcute/client/lexicons';
+import { error } from '@sveltejs/kit';
 
 import { PUBLIC_APPVIEW_URL } from '$env/static/public';
 import type { PageLoad } from './$types';
@@ -12,39 +14,57 @@ export const load: PageLoad = async ({ params }) => {
 
 	let did: Did;
 	if (!isDid(params.actor)) {
-		did = await resolveHandle({ rpc, handle: params.actor });
+		try {
+			did = await resolveHandle({ rpc, handle: params.actor });
+		} catch (err) {
+			if (err instanceof XRPCError) {
+				switch (err.kind) {
+					case 'InvalidRequest': {
+						error(404, `Account doesn't exist`);
+					}
+				}
+			}
+
+			throw err;
+		}
 	} else {
 		did = params.actor;
 	}
 
 	const uri = makeAtUri(did, 'app.bsky.feed.post', params.rkey);
 
-	// TODO: look previous pages for an existing post
-	{
-	}
+	let data: AppBskyFeedGetPostThread.Output;
 
-	const { data } = await rpc.get('app.bsky.feed.getPostThread', {
-		params: {
-			uri: uri,
-			depth: 4,
-			parentHeight: 10,
-		},
-	});
+	try {
+		const response = await rpc.get('app.bsky.feed.getPostThread', {
+			params: {
+				uri: uri,
+				depth: 4,
+				parentHeight: 10,
+			},
+		});
+
+		data = response.data;
+	} catch (err) {
+		if (err instanceof XRPCError) {
+			switch (err.kind) {
+				case 'NotFound': {
+					error(404, `Post not found`);
+				}
+			}
+		}
+
+		throw err;
+	}
 
 	const thread = data.thread;
 	switch (thread.$type) {
 		case 'app.bsky.feed.defs#notFoundPost': {
-			throw new XRPCError(400, {
-				kind: 'NotFound',
-				description: `Post not found: ${uri}`,
-			});
+			error(404, `Post not found`);
 		}
 		case 'app.bsky.feed.defs#blockedPost': {
 			// shouldn't happen?
-			throw new XRPCError(400, {
-				kind: 'NotFound',
-				description: `Blocked post: ${uri}`,
-			});
+			error(404, `Blocked post`);
 		}
 	}
 

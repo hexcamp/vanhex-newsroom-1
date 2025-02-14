@@ -3,6 +3,8 @@
 
 	import type { AppBskyEmbedVideo } from '@atcute/client/lexicons';
 
+	import { replaceVideoCdnUrl } from '$lib/utils/bsky';
+
 	import PlaySolid from '$lib/components/central-icons/play-solid.svelte';
 
 	interface Props {
@@ -16,7 +18,12 @@
 
 <div class={['video-thumbnail-embed', !borderless && 'is-bordered']}>
 	<div class="constrainer">
-		<img loading="lazy" src={video.thumbnail} alt={video.alt} class={['thumbnail', blur && 'is-blurred']} />
+		<img
+			loading="lazy"
+			src={video.thumbnail && replaceVideoCdnUrl(video.thumbnail)}
+			alt={video.alt}
+			class={['thumbnail', blur && 'is-blurred']}
+		/>
 
 		<div class="play">
 			<PlaySolid />

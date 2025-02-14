@@ -3,10 +3,12 @@
 </script>
 
 <script lang="ts">
+	import type { AppBskyEmbedVideo } from '@atcute/client/lexicons';
+
 	import { dev } from '$app/environment';
 	import { base } from '$app/paths';
 
-	import type { AppBskyEmbedVideo } from '@atcute/client/lexicons';
+	import { replaceVideoCdnUrl } from '$lib/utils/bsky';
 
 	import PlaySolid from '$lib/components/central-icons/play-solid.svelte';
 	import Island from '$lib/components/island.svelte';
@@ -41,7 +43,12 @@
 	<div class={['video-standalone-embed', 'isl-video-embed', ratio && 'has-ratio']}>
 		<div class="constrainer" style:aspect-ratio={ratio}>
 			<a href={videoUrl} aria-label="Play video" class="link">
-				<img loading="lazy" src={video.thumbnail} alt={video.alt} class="thumbnail" />
+				<img
+					loading="lazy"
+					src={video.thumbnail && replaceVideoCdnUrl(video.thumbnail)}
+					alt={video.alt}
+					class="thumbnail"
+				/>
 
 				<div class="play">
 					<PlaySolid />

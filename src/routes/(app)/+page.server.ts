@@ -12,6 +12,8 @@ import {
 
 import { base } from '$app/paths';
 
+const MAYBE_HANDLE_RE = /^@[a-zA-Z0-9-.]+$/;
+
 export const actions = {
 	async search({ request }) {
 		const formData = await request.formData();
@@ -23,7 +25,7 @@ export const actions = {
 
 		query = query.trim();
 
-		if (query.startsWith('@') && isHandle(query.slice(1))) {
+		if (MAYBE_HANDLE_RE.test(query)) {
 			redirect(302, `${base}/search/users?q=${encodeURIComponent(query)}`);
 		}
 

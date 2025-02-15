@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Avatar from '$lib/components/avatar.svelte';
-	import HashtagOutlined from '$lib/components/central-icons/hashtag-outlined.svelte';
 	import PageContainer from '$lib/components/page/page-container.svelte';
 
 	import type { PageProps } from './$types';

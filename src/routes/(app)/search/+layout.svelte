@@ -19,6 +19,10 @@
 	};
 </script>
 
+<svelte:head>
+	<link rel="canonical" href="https://bsky.app/search?q={query}" />
+</svelte:head>
+
 <PageContainer>
 	<div class="search-container">
 		<form method="get" class="search-box">

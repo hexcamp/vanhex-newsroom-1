@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Avatar from '$lib/components/avatar.svelte';
+	import HashtagOutlined from '$lib/components/central-icons/hashtag-outlined.svelte';
 	import PageContainer from '$lib/components/page/page-container.svelte';
 
 	import type { PageProps } from './$types';
@@ -9,7 +11,13 @@
 
 {#snippet Topic(topic: MappedTopic)}
 	<a href={topic.href} class="topic">
-		{topic.name}
+		{#if topic.type === 'starterpack'}
+			<Avatar type="starterpack" size="xs" />
+			<!-- {:else}
+			<HashtagOutlined /> -->
+		{/if}
+
+		<span>{topic.name}</span>
 	</a>
 {/snippet}
 
@@ -65,11 +73,23 @@
 	}
 
 	.topic {
+		display: flex;
+		align-items: center;
+		gap: 8px;
 		border: 1px solid var(--divider-sm);
 		border-radius: 9999px;
 		padding: 4px 12px;
 		color: color-mix(in srgb, var(--text-primary), transparent 10%);
 		font-weight: 500;
+
+		:global(.avatar) {
+			margin-left: -4px;
+		}
+
+		:global(.sv-icon) {
+			margin-left: -2px;
+			font-size: 1rem;
+		}
 
 		@media (hover: hover) {
 			&:hover {

@@ -12,14 +12,16 @@
 
 	const { data }: PageProps = $props();
 
-	const canonical = $derived(`${base}/${data.feed.creator.did}/feeds/${parseAtUri(data.feed.uri).rkey}`);
+	const rkey = $derived(parseAtUri(data.feed.uri).rkey);
 
-	const { rootUrl, nextUrl } = $derived(paginate(page.url, data.timeline.cursor, canonical));
+	const { rootUrl, nextUrl } = $derived(
+		paginate(page.url, data.timeline.cursor, `${base}/${data.feed.creator.did}/feeds/${rkey}`),
+	);
 </script>
 
 <svelte:head>
 	<title>{data.feed.displayName} — {PUBLIC_APP_NAME}</title>
-	<link rel="canonical" href={canonical} />
+	<link rel="canonical" href="https://bsky.app/profile/{data.feed.creator.did}/feed/{rkey}" />
 	<link rel="alternate" href={data.feed.uri} />
 </svelte:head>
 

@@ -40,7 +40,10 @@
 
 <svelte:head>
 	<title>{title}</title>
-	<link rel="canonical" href="{base}/{data.thread.post.author.did}/{parseAtUri(data.thread.post.uri).rkey}" />
+	<link
+		rel="canonical"
+		href="https://bsky.app/profile/{data.thread.post.author.did}/post/{parseAtUri(data.thread.post.uri).rkey}"
+	/>
 	<link rel="alternate" href={data.thread.post.uri} />
 </svelte:head>
 

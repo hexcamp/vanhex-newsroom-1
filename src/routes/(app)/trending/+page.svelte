@@ -1,12 +1,18 @@
 <script lang="ts">
+	import { PUBLIC_APP_NAME } from '$env/static/public';
+	import type { PageProps } from './$types';
+
 	import Avatar from '$lib/components/avatar.svelte';
 	import PageContainer from '$lib/components/page/page-container.svelte';
 
-	import type { PageProps } from './$types';
 	import type { MappedTopic } from './utils';
 
 	const { data }: PageProps = $props();
 </script>
+
+<svelte:head>
+	<title>Trending — {PUBLIC_APP_NAME}</title>
+</svelte:head>
 
 {#snippet Topic(topic: MappedTopic)}
 	<a href={topic.href} class="topic">

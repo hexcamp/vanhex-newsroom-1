@@ -5,9 +5,15 @@ export const handleError: HandleServerError = async ({ error, event, status, mes
 	console.error(error);
 
 	if (error instanceof XRPCError) {
+		if (error.status === 403) {
+			return {
+				message: `Upstream server is forbidding access to this resource`,
+			};
+		}
+
 		if (error.kind === 'AuthRequired' || error.kind === 'auth required') {
 			return {
-				message: `Upstream server is requiring authentication`,
+				message: `Upstream server is requiring authentication to access this resource`,
 			};
 		}
 

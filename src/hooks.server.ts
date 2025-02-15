@@ -5,12 +5,16 @@ export const handleError: HandleServerError = async ({ error, event, status, mes
 	console.error(error);
 
 	if (error instanceof XRPCError) {
-		switch (error.kind) {
-			case 'InternalServerError': {
-				return {
-					message: `Upstream server returned an internal error`,
-				};
-			}
+		if (error.kind === 'AuthRequired' || error.kind === 'auth required') {
+			return {
+				message: `Upstream server is requiring authentication`,
+			};
+		}
+
+		if (error.kind === 'InternalServerError' || error.description === 'Internal Server Error') {
+			return {
+				message: `Upstream server returned an internal error`,
+			};
 		}
 	}
 

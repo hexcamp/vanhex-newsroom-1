@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts">
+	import { base } from '$app/paths';
+
 	import { tokenize } from '@atcute/bluesky-richtext-parser';
 
 	interface Props {
@@ -20,9 +22,9 @@
 				{token.raw.replace(HTTP_RE, '')}
 			</a>
 		{:else if token.type === 'mention'}
-			<a href="/{token.handle.toLowerCase()}" class="mention">{token.raw}</a>
+			<a href="{base}/{token.handle.toLowerCase()}" class="mention">{token.raw}</a>
 		{:else if token.type === 'topic'}
-			<span class="hashtag">{token.raw}</span>
+			<a href="{base}/search/posts?q={encodeURIComponent('#' + token.name)}" class="hashtag">{token.raw}</a>
 		{:else}
 			{token.raw}
 		{/if}

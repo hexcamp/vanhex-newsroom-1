@@ -34,7 +34,9 @@
 		{:else if feature.$type === 'app.bsky.richtext.facet#mention'}
 			<a href="{base}/{feature.did}" class="mention">{segment.text}</a>
 		{:else if feature.$type === 'app.bsky.richtext.facet#tag'}
-			<span class="hashtag">{segment.text}</span>
+			<a href="{base}/search/posts?q={encodeURIComponent('#' + feature.tag)}" class="hashtag"
+				>{segment.text}</a
+			>
 		{/if}
 	{/each}
 </p>

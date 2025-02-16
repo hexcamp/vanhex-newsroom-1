@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { PUBLIC_APP_NAME } from '$env/static/public';
 	import type { PageProps } from './$types';
 
 	import PageContainer from '$lib/components/page/page-container.svelte';
@@ -12,6 +13,10 @@
 
 	const { rootUrl, nextUrl } = $derived(paginate(page.url, data.cursor));
 </script>
+
+<svelte:head>
+	<title>All replies — {PUBLIC_APP_NAME}</title>
+</svelte:head>
 
 <PageContainer>
 	<PageHeader title="All replies" />

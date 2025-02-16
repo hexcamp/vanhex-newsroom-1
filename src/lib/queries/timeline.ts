@@ -8,7 +8,8 @@ import type {
 } from '@atcute/client/lexicons';
 
 import {
-	createJoinedItems,
+	buildTimelineSlices,
+	flattenTimelineSlices,
 	type PostFilter,
 	type SliceFilter,
 	type TimelineItem,
@@ -137,7 +138,7 @@ export const fetchTimeline = async ({
 	const page: TimelinePage = {
 		// Prevent fetching the same data over and over
 		cursor: timeline.cursor !== params.cursor ? timeline.cursor : undefined,
-		items: createJoinedItems(timeline.feed, sliceFilter, postFilter),
+		items: flattenTimelineSlices(buildTimelineSlices(timeline.feed, sliceFilter, postFilter)),
 	};
 
 	return page;

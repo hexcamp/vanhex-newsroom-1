@@ -44,11 +44,11 @@ const isFirstInThread = (slice: TimelineSlice, item: TimelineItem) => {
 	return parent?.$type === 'app.bsky.feed.defs#postView' && parent.cid === item.post.cid;
 };
 
-export const createJoinedItems = (
+export const buildTimelineSlices = (
 	arr: TimelineItem[],
 	filterSlice?: SliceFilter,
 	filterPost?: PostFilter,
-): UiTimelineItem[] => {
+): TimelineSlice[] => {
 	let slices: TimelineSlice[] = [];
 	let jlen = 0;
 
@@ -60,9 +60,6 @@ export const createJoinedItems = (
 			continue;
 		}
 
-		// if we find a matching slice and it's currently not in front, then bump
-		// it to the front. this is so that new reply don't get buried away because
-		// there's multiple posts separating it and the parent post.
 		for (let j = 0; j < jlen; j++) {
 			const slice = slices[j];
 
@@ -107,8 +104,7 @@ export const createJoinedItems = (
 			if (result) {
 				if (Array.isArray(result)) {
 					for (let k = 0, klen = result.length; k < klen; k++) {
-						const slice = result[k];
-						slices.push(slice);
+						slices.push(result[k]);
 					}
 				} else {
 					slices.push(slice);
@@ -117,11 +113,15 @@ export const createJoinedItems = (
 		}
 	}
 
-	return slices.flatMap((slice) => {
-		const arr = slice.items;
-		const len = arr.length;
+	return slices;
+};
 
-		return arr.map((item, idx): UiTimelineItem => {
+export const flattenTimelineSlices = (slices: TimelineSlice[]): UiTimelineItem[] => {
+	return slices.flatMap((slice) => {
+		const items = slice.items;
+		const len = items.length;
+
+		return items.map((item, idx): UiTimelineItem => {
 			const post = item.post;
 			const reason = item.reason;
 
@@ -155,7 +155,7 @@ export const createJoinedItems = (
 	});
 };
 
-export const createUnjoinedItems = (arr: TimelineItem[], filterPost?: PostFilter): UiTimelineItem[] => {
+export const mapTimelineItems = (arr: TimelineItem[], filterPost?: PostFilter): UiTimelineItem[] => {
 	return mapDefined(arr, (item) => {
 		if (filterPost && !filterPost(item)) {
 			return;

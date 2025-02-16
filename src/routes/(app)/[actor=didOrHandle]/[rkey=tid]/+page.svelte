@@ -67,7 +67,7 @@
 			<!-- thanks Svelte for your whitespace handling -->
 			<!-- prettier-ignore -->
 			<Descendants thread={data.thread} threadgate={data.threadgate} />{#if missingReplyCount > 0}
-				<MissingDescendantItem count={missingReplyCount} />
+				<MissingDescendantItem count={missingReplyCount} post={data.thread.post} />
 			{/if}
 		</div>
 	</div>

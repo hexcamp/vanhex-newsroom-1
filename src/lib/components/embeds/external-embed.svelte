@@ -119,4 +119,9 @@
 		font-weight: 500;
 		font-size: 0.75rem;
 	}
+	.domain-name {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 </style>

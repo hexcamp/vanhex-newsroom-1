@@ -1,10 +1,10 @@
 import { simpleFetchHandler, XRPC } from '@atcute/client';
 
 import { PUBLIC_APPVIEW_URL } from '$env/static/public';
+import type { PageLoad } from './$types';
+
 import { fetchTimeline, ProfileFilter, TimelineType } from '$lib/queries/timeline';
 import { isDid, type Did } from '$lib/types/identity';
-
-import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ url, params, fetch, parent }) => {
 	const rpc = new XRPC({ handler: simpleFetchHandler({ service: PUBLIC_APPVIEW_URL }) });

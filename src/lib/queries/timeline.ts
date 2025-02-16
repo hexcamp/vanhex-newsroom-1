@@ -37,6 +37,7 @@ export interface ProfileTimelineParams {
 	type: TimelineType.PROFILE;
 	actor: Did;
 	filter: ProfileFilter;
+	pinned?: boolean;
 	cursor?: string;
 }
 
@@ -80,7 +81,7 @@ export const fetchTimeline = async ({
 					actor: params.actor,
 					cursor: params.cursor,
 					limit: PAGE_LIMIT,
-					includePins: params.filter !== ProfileFilter.MEDIA,
+					includePins: params.pinned ?? params.filter !== ProfileFilter.MEDIA,
 					filter:
 						params.filter === ProfileFilter.MEDIA
 							? 'posts_with_media'

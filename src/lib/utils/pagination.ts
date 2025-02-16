@@ -9,7 +9,7 @@ const relative = (url: URL | undefined, canonicalPath?: string): string | undefi
 	}
 
 	const queryAndHash = url.search + url.hash;
-	return canonicalPath ? canonicalPath + queryAndHash : queryAndHash;
+	return canonicalPath ? canonicalPath + queryAndHash : queryAndHash || '?';
 };
 
 export const paginate = (url: URL, cursor?: string, canonicalPath?: string): PaginationResult => {

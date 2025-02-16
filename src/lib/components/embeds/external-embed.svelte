@@ -21,6 +21,8 @@
 <script lang="ts">
 	import type { AppBskyEmbedExternal } from '@atcute/client/lexicons';
 
+	import { truncateRight } from '$lib/utils/strings';
+
 	import EarthOutlined from '$lib/components/central-icons/earth-outlined.svelte';
 
 	interface Props {
@@ -40,8 +42,8 @@
 	{/if}
 
 	<div class="meta">
-		<p class="title">{external.title.trim()}</p>
-		<p class="description">{external.description.trim()}</p>
+		<p class="title">{truncateRight(external.title.trim().replace(/\s+/g, ' '), 190)}</p>
+		<p class="description">{truncateRight(external.description.trim().replace(/\s+/g, ' '), 190)}</p>
 
 		{#if domain}
 			<div class="domain">

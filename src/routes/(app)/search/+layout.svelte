@@ -30,7 +30,6 @@
 			<input
 				type="search"
 				name="q"
-				required
 				value={page.url.searchParams.get('q') ?? ''}
 				placeholder="Search..."
 				class="input"

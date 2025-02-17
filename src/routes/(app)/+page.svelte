@@ -88,7 +88,7 @@
 		justify-content: center;
 		align-items: center;
 		gap: 24px;
-		min-height: 100dvh;
+		min-height: 100svh;
 	}
 
 	.container {

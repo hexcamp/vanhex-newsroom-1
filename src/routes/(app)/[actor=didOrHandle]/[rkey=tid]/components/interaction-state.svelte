@@ -18,6 +18,8 @@
 
 	const { threadgate }: Props = $props();
 
+	const id = $props.id();
+
 	const record = $derived(threadgate?.record as AppBskyFeedThreadgate.Record | undefined);
 
 	const allow = $derived.by(() => {
@@ -70,78 +72,69 @@
 	});
 </script>
 
-<details class="interactions-state">
-	<summary class="button">
-		<summary.icon />
-		<span>{summary.label}</span>
-	</summary>
+<button class="button" popovertarget={id}>
+	<summary.icon />
+	<span>{summary.label}</span>
+</button>
 
-	<div class="container">
-		<div class="popover">
-			<h3 class="title">Who can reply?</h3>
+<dialog popover="auto" class="dialog" {id}>
+	<h3 class="title">Who can reply?</h3>
 
-			{#if allow === undefined}
-				<p class="detail">Everyone can reply to this thread.</p>
-			{:else if allow.length === 0}
-				<p class="detail">Replies to this thread are disabled.</p>
-			{:else}
-				<p class="detail">Replies to this thread are limited to:</p>
+	{#if allow === undefined}
+		<p class="detail">Everyone can reply to this thread.</p>
+	{:else if allow.length === 0}
+		<p class="detail">Replies to this thread are disabled.</p>
+	{:else}
+		<p class="detail">Replies to this thread are limited to:</p>
 
-				<ul class="rules">
-					{#each allow as rule}
-						{#if rule.$type === 'app.bsky.feed.threadgate#followerRule'}
-							<li>Users following the thread author</li>
-						{:else if rule.$type === 'app.bsky.feed.threadgate#followingRule'}
-							<li>Users followed by the thread author</li>
-						{:else if rule.$type === 'app.bsky.feed.threadgate#mentionRule'}
-							<li>Users mentioned in the thread</li>
-						{:else if rule.$type === 'app.bsky.feed.threadgate#listRule'}
-							{@const hydrated = threadgate!.lists?.find((list) => list.uri === rule.list)}
+		<ul class="rules">
+			{#each allow as rule}
+				{#if rule.$type === 'app.bsky.feed.threadgate#followerRule'}
+					<li>Users following the thread author</li>
+				{:else if rule.$type === 'app.bsky.feed.threadgate#followingRule'}
+					<li>Users followed by the thread author</li>
+				{:else if rule.$type === 'app.bsky.feed.threadgate#mentionRule'}
+					<li>Users mentioned in the thread</li>
+				{:else if rule.$type === 'app.bsky.feed.threadgate#listRule'}
+					{@const hydrated = threadgate!.lists?.find((list) => list.uri === rule.list)}
 
-							{#if hydrated}
-								{@const uri = parseAtUri(rule.list)}
+					{#if hydrated}
+						{@const uri = parseAtUri(rule.list)}
 
-								<li>
-									Users in <a class="link" href="{base}/{uri.repo}/lists/{uri.rkey}">{hydrated.name}</a> list
-								</li>
-							{:else}
-								<li>Users in a deleted list</li>
-							{/if}
-						{:else}
-							<li>Unknown rule</li>
-						{/if}
-					{/each}
-				</ul>
-			{/if}
-		</div>
-	</div>
-</details>
+						<li>
+							Users in <a class="link" href="{base}/{uri.repo}/lists/{uri.rkey}">{hydrated.name}</a> list
+						</li>
+					{:else}
+						<li>Users in a deleted list</li>
+					{/if}
+				{:else}
+					<li>Unknown rule</li>
+				{/if}
+			{/each}
+		</ul>
+	{/if}
+</dialog>
 
 <style>
 	.button {
 		display: flex;
 		align-items: center;
 		gap: 6px;
+		appearance: none;
 		cursor: pointer;
+		border: 0;
+		background: transparent;
+		color: inherit;
 		list-style: none;
 		user-select: none;
+		anchor-name: --myAnchor;
 
 		&:hover {
 			text-decoration: underline;
 		}
 	}
 
-	.container {
-		position: relative;
-		color: var(--text-primary);
-	}
-
-	.popover {
-		position: absolute;
-		top: 4px;
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: 1;
+	.dialog {
 		box-shadow:
 			0 10px 15px -3px rgb(0 0 0 / 0.1),
 			0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -151,6 +144,18 @@
 		padding: 16px;
 		width: max-content;
 		max-width: 384px;
+		color: var(--text-primary);
+
+		@supports not (position-anchor: auto) {
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+		@supports (position-anchor: auto) {
+			position-anchor: --myAnchor;
+			top: calc(anchor(bottom) + 5px);
+			justify-self: anchor-center;
+		}
 	}
 
 	.title {

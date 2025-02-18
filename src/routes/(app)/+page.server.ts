@@ -4,7 +4,7 @@ import { base } from '$app/paths';
 
 import { redirectAtUri, redirectBskyUrl } from '$lib/redirector';
 
-const MAYBE_HANDLE_RE = /^@[a-zA-Z0-9-.]+$/;
+const MAYBE_HANDLE_RE = /^@[a-zA-Z0-9-. ]+$/;
 
 export const actions = {
 	async search({ request }) {

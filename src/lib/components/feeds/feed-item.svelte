@@ -21,7 +21,7 @@
 
 <div class="feed-item">
 	<div class="main">
-		<Avatar type="generator" src={feed.avatar} {href} />
+		<Avatar type="generator" src={feed.avatar} {href} tabindex={-1} />
 
 		<a {href} class="info">
 			<p class="name">{feed.displayName}</p>

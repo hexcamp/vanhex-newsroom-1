@@ -3,7 +3,7 @@
 
 	import { base } from '$app/paths';
 
-	import { findLabel, FlagsBlurContent } from '$lib/moderation';
+	import { findLabel, FlagsBlurContent, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
 
 	import Avatar from '$lib/components/avatar.svelte';
@@ -30,6 +30,7 @@
 	const record = $derived(post.record as AppBskyFeedPost.Record);
 	const postUrl = $derived(`${base}/${author.did}/${parseAtUri(post.uri).rkey}#main`);
 
+	const isAviBlurred = $derived(!!findLabel(author.labels, author.did, FlagsBlurMedia));
 	const blur = $derived(findLabel(post.labels, author.did, FlagsBlurContent));
 </script>
 
@@ -40,7 +41,7 @@
 				<div class="ascendant-line"></div>
 			{/if}
 
-			<Avatar profile={author} tabindex={-1} href={authorUrl} />
+			<Avatar profile={author} tabindex={-1} href={authorUrl} blur={isAviBlurred} />
 
 			<div class="descendant-line"></div>
 		</div>

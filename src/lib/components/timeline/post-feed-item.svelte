@@ -4,7 +4,7 @@
 	import { base } from '$app/paths';
 
 	import type { UiTimelineItem } from '$lib/models/timeline';
-	import { findLabel, FlagsBlurContent } from '$lib/moderation';
+	import { findLabel, FlagsBlurContent, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
 
 	import ArrowsRepeatRightLeftOutlined from '$lib/components/central-icons/arrows-repeat-right-left-outlined.svelte';
@@ -31,6 +31,7 @@
 	const record = $derived(post.record as AppBskyFeedPost.Record);
 	const postUrl = $derived(`${base}/${author.did}/${parseAtUri(post.uri).rkey}#main`);
 
+	const isAviBlurred = $derived(!!findLabel(author.labels, author.did, FlagsBlurMedia));
 	const blur = $derived(findLabel(post.labels, author.did, FlagsBlurContent));
 </script>
 
@@ -70,7 +71,7 @@
 
 	<div class="content">
 		<div class="aside">
-			<Avatar profile={author} tabindex={-1} href={authorUrl} />
+			<Avatar profile={author} tabindex={-1} href={authorUrl} blur={isAviBlurred} />
 
 			{#if item.next}
 				<div class="descendant-line"></div>

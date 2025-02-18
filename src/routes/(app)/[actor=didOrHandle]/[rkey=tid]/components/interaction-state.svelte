@@ -170,7 +170,7 @@
 
 	.rules {
 		margin: 8px 0 0 0;
-		padding: 0 0 0 12px;
+		padding: 0 0 0 14px;
 	}
 	li + li {
 		margin: 4px 0 0 0;

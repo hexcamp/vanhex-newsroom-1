@@ -32,6 +32,8 @@
 
 		{#if nextUrl}
 			<a href={nextUrl} class="button more-button">Show more replies</a>
+		{:else}
+			<div class="end-marker">No more replies</div>
 		{/if}
 	</div>
 </PageContainer>
@@ -58,7 +60,20 @@
 		border-top: 1px solid var(--divider-sm);
 	}
 
+	.end-marker {
+		display: grid;
+		place-items: center;
+		height: 53px;
+		color: var(--text-blurb);
+		font-style: italic;
+		font-weight: 500;
+	}
+
 	.descendants {
 		padding: 4px 0;
+
+		&:empty {
+			display: none;
+		}
 	}
 </style>

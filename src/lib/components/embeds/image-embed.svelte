@@ -89,7 +89,7 @@
 
 	<img loading="lazy" src={image.thumb} alt={image.alt} class={`image` + (blur ? ` is-blurred` : ``)} />
 
-	{#if image.alt.trim()}
+	{#if standalone && image.alt.trim()}
 		<ImageAlt alt={image.alt} />
 	{/if}
 {/snippet}

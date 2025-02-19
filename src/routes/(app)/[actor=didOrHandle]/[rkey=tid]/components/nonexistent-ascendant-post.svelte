@@ -8,18 +8,20 @@
 	const { postUrl }: Props = $props();
 </script>
 
-<div class="overflow-ascendant-item">
+<div class="nonexistent-ascendant-item">
 	<div class="circle">
 		<DotGrid_1x3HorizontalOutlined />
 	</div>
 
 	<div class="descendant-line"></div>
 
-	<a href={postUrl} class="link">See parent replies</a>
+	<span>Post is unavailable</span>
+
+	<a href={postUrl} class="link">View</a>
 </div>
 
 <style>
-	.overflow-ascendant-item {
+	.nonexistent-ascendant-item {
 		display: flex;
 		position: relative;
 		gap: 12px;

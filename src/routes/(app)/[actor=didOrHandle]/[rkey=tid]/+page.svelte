@@ -8,12 +8,14 @@
 	import { parseAtUri } from '$lib/types/at-uri';
 	import { truncateMiddle, truncateRight } from '$lib/utils/strings';
 
+	import BlockedAscendantItem from './components/blocked-ascendant-item.svelte';
+	import Descendants from './components/descendants.svelte';
 	import MainPost from './components/main-post.svelte';
 	import MissingDescendantItem from './components/missing-descendant-item.svelte';
+	import NonexistentAscendantPost from './components/nonexistent-ascendant-post.svelte';
 	import OverflowAscendantItem from './components/overflow-ascendant-item.svelte';
 	import PostAscendantItem from './components/post-ascendant-item.svelte';
 
-	import Descendants from './components/descendants.svelte';
 	import { getAncestors } from './utils';
 
 	const { data }: PageProps = $props();
@@ -48,12 +50,18 @@
 		{#each ancestors as item}
 			{#if item.type === 'post'}
 				<PostAscendantItem {item} />
-			{:else if item.type === 'blocked'}
-				<div>blocked</div>
 			{:else if item.type === 'overflow'}
 				{@const uri = parseAtUri(item.uri)}
 
 				<OverflowAscendantItem postUrl="{base}/{uri.repo}/{uri.rkey}#main" />
+			{:else if item.type === 'blocked'}
+				{@const uri = parseAtUri(item.uri)}
+
+				<BlockedAscendantItem postUrl="{base}/{uri.repo}/{uri.rkey}#main" />
+			{:else if item.type === 'nonexistent'}
+				{@const uri = parseAtUri(item.uri)}
+
+				<NonexistentAscendantPost postUrl="{base}/{uri.repo}/{uri.rkey}#main" />
 			{/if}
 		{/each}
 	</div>

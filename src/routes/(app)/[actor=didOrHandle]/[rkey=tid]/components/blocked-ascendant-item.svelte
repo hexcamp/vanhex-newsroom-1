@@ -8,18 +8,20 @@
 	const { postUrl }: Props = $props();
 </script>
 
-<div class="overflow-ascendant-item">
+<div class="blocked-ascendant-item">
 	<div class="circle">
 		<DotGrid_1x3HorizontalOutlined />
 	</div>
 
 	<div class="descendant-line"></div>
 
-	<a href={postUrl} class="link">See parent replies</a>
+	<span>Blocked post</span>
+
+	<a href={postUrl} class="link">View</a>
 </div>
 
 <style>
-	.overflow-ascendant-item {
+	.blocked-ascendant-item {
 		display: flex;
 		position: relative;
 		gap: 12px;

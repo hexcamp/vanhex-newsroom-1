@@ -17,8 +17,6 @@
 
 	const images = $derived(embed.images);
 	const length = $derived(images.length);
-
-	const instanceId = $props.id();
 </script>
 
 <div class={['image-embed', !borderless && 'is-bordered', standalone && length === 1 && 'is-aligned']}>

@@ -19,7 +19,7 @@
 <dialog popover="auto" class="dialog" {id} style="position-anchor: --{id}">
 	<h3 class="title">Image description</h3>
 
-	<p>{alt}</p>
+	<p class="text">{alt}</p>
 </dialog>
 
 <style>
@@ -73,5 +73,10 @@
 		margin: 0 0 8px 0;
 		font-size: 1rem;
 		line-height: 1.5rem;
+	}
+
+	.text {
+		white-space: pre-wrap;
+		overflow-wrap: break-word;
 	}
 </style>

@@ -86,11 +86,12 @@
 
 {#snippet Image(index: number)}
 	{@const image = images[index]}
+	{@const alt = image.alt.trim()}
 
-	<img loading="lazy" src={image.thumb} alt={image.alt} class={`image` + (blur ? ` is-blurred` : ``)} />
+	<img loading="lazy" src={image.thumb} {alt} class={`image` + (blur ? ` is-blurred` : ``)} />
 
-	{#if standalone && image.alt.trim()}
-		<ImageAlt alt={image.alt} />
+	{#if standalone && alt}
+		<ImageAlt {alt} />
 	{/if}
 {/snippet}
 

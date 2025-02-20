@@ -13,6 +13,7 @@
 	import RichTextRenderer from '$lib/components/richtext-renderer.svelte';
 
 	import InteractionState from './interaction-state.svelte';
+	import MainPostActions from './main-post-actions.svelte';
 	import MainPostMetrics from './main-post-metrics.svelte';
 
 	interface Props {
@@ -52,6 +53,8 @@
 
 			<span class="handle">@{author.handle}</span>
 		</a>
+
+		<MainPostActions {post} />
 	</div>
 
 	<ContentHider {blur}>
@@ -89,6 +92,7 @@
 
 	.name-wrapper {
 		display: block;
+		margin: 0 auto 0 0;
 		max-width: 100%;
 		overflow: hidden;
 		color: inherit;

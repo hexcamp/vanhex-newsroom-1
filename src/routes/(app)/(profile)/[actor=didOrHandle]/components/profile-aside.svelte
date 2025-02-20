@@ -7,6 +7,8 @@
 	import { formatCompactNumber, formatLongNumber } from '$lib/utils/intl/number';
 
 	import Avatar from '$lib/components/avatar.svelte';
+	import SquareArrowTopRightOutlined from '$lib/components/central-icons/square-arrow-top-right-outlined.svelte';
+	import OverflowMenu from '$lib/components/overflow-menu.svelte';
 	import RichtextRawRenderer from '$lib/components/richtext-raw-renderer.svelte';
 
 	interface Props {
@@ -37,6 +39,24 @@
 <div class="profile-aside">
 	<Avatar {profile} size="xl" {blur} />
 
+	<OverflowMenu
+		class="profile-overflow"
+		items={[
+			{
+				label: `Open in Bluesky app`,
+				href: `https://bsky.app/profile/${profile.did}`,
+				external: true,
+				icon: SquareArrowTopRightOutlined,
+			},
+			{
+				label: `Open in PDSls`,
+				href: `https://pdsls.dev/at://${profile.did}`,
+				external: true,
+				icon: SquareArrowTopRightOutlined,
+			},
+		]}
+	/>
+
 	<div class="name-wrapper">
 		<p dir="auto" class="display-name">{profile.displayName?.trim() || profile.handle.slice(0, 64)}</p>
 		<p class="handle">@{profile.handle}</p>
@@ -55,11 +75,18 @@
 <style>
 	.profile-aside {
 		display: flex;
+		position: relative;
 		flex-direction: column;
 		gap: 8px;
 		background: var(--bg-primary);
 		padding: 16px;
 		min-width: 0;
+
+		:global(.profile-overflow) {
+			position: absolute;
+			top: 12px;
+			right: 12px;
+		}
 	}
 
 	.display-name {

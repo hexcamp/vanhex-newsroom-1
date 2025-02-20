@@ -1,38 +1,37 @@
 <script lang="ts">
-	import type { AppBskyFeedDefs } from '@atcute/client/lexicons';
-
-	import { parseAtUri } from '$lib/types/at-uri';
+	import type { Component } from 'svelte';
 
 	import DotGrid_1x3HorizontalOutlined from '$lib/components/central-icons/dot-grid-1x3-horizontal-outlined.svelte';
-	import SquareArrowTopRightOutlined from '$lib/components/central-icons/square-arrow-top-right-outlined.svelte';
 
-	interface Props {
-		post: AppBskyFeedDefs.PostView;
+	interface Item {
+		id?: string;
+		label: string;
+		href: string;
+		external?: boolean;
+		icon: Component;
 	}
 
-	const { post }: Props = $props();
+	interface Props {
+		items: Item[];
+		class?: string;
+	}
+
+	const { items, class: className }: Props = $props();
 
 	const id = $props.id();
 </script>
 
-<button class="button" title="More actions" popovertarget={id} style="anchor-name: --{id}">
+<button class={['button', className]} title="More actions" popovertarget={id} style="anchor-name: --{id}">
 	<DotGrid_1x3HorizontalOutlined />
 </button>
 
 <dialog class="menu" {id} popover="auto" style="position-anchor: --{id}">
-	<a
-		class="item"
-		href="https://bsky.app/profile/{post.author.did}/post/{parseAtUri(post.uri).rkey}"
-		rel="noopener nofollow"
-	>
-		<SquareArrowTopRightOutlined />
-		<span>Open in Bluesky app</span>
-	</a>
-
-	<a class="item" href="https://pdsls.dev/{post.uri}" rel="noopener nofollow">
-		<SquareArrowTopRightOutlined />
-		<span>Open in PDSls</span>
-	</a>
+	{#each items as { id, label, href, external, icon: Icon }}
+		<a class="item" {id} {href} rel={external ? 'noopener nofollow' : undefined}>
+			<Icon />
+			<span>{label}</span>
+		</a>
+	{/each}
 </dialog>
 
 <style>
@@ -41,7 +40,6 @@
 		place-items: center;
 		appearance: none;
 		cursor: pointer;
-		margin: 0 -4px;
 		border: none;
 		border-radius: 9999px;
 		background: transparent;

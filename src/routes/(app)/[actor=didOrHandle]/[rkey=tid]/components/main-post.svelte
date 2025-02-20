@@ -7,13 +7,14 @@
 	import { parseAtUri } from '$lib/types/at-uri';
 
 	import Avatar from '$lib/components/avatar.svelte';
+	import SquareArrowTopRightOutlined from '$lib/components/central-icons/square-arrow-top-right-outlined.svelte';
 	import ContentHider from '$lib/components/content-hider.svelte';
 	import Embeds from '$lib/components/embeds/embeds.svelte';
 	import LongDate from '$lib/components/islands/long-date.svelte';
+	import OverflowMenu from '$lib/components/overflow-menu.svelte';
 	import RichTextRenderer from '$lib/components/richtext-renderer.svelte';
 
 	import InteractionState from './interaction-state.svelte';
-	import MainPostActions from './main-post-actions.svelte';
 	import MainPostMetrics from './main-post-metrics.svelte';
 
 	interface Props {
@@ -54,7 +55,23 @@
 			<span class="handle">@{author.handle}</span>
 		</a>
 
-		<MainPostActions {post} />
+		<OverflowMenu
+			class="post-actions"
+			items={[
+				{
+					label: `Open in Bluesky app`,
+					href: `https://bsky.app/profile/${author.did}/post/${parseAtUri(post.uri).rkey}`,
+					external: true,
+					icon: SquareArrowTopRightOutlined,
+				},
+				{
+					label: `Open in PDSls`,
+					href: `https://pdsls.dev/${post.uri}`,
+					external: true,
+					icon: SquareArrowTopRightOutlined,
+				},
+			]}
+		/>
 	</div>
 
 	<ContentHider {blur}>
@@ -79,6 +96,10 @@
 <style>
 	.highlighted-post {
 		padding: 12px 16px 0 16px;
+
+		:global(.post-actions) {
+			margin: 0 -4px;
+		}
 	}
 
 	.meta {

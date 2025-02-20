@@ -45,11 +45,12 @@
 		background: transparent;
 		width: 32px;
 		height: 32px;
-		color: var(--text-primary);
+		color: var(--text-blurb);
 		font-size: 16px;
 
 		&:hover {
 			background: var(--tap-md);
+			color: var(--text-primary);
 		}
 	}
 

@@ -203,10 +203,6 @@
 		flex-direction: column;
 		padding: 24px 0;
 		min-width: 0;
-
-		.item:last-child & {
-			padding-bottom: 16px;
-		}
 	}
 	.meta {
 		color: var(--text-blurb);

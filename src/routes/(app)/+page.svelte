@@ -73,11 +73,6 @@
 			<HashtagOutlined />
 			<span>Feeds</span>
 		</a>
-
-		<a href="{base}/did:plc:z72i7hdynmk6r22z27h6tvur/feeds/whats-hot" class="link">
-			<CompassRoundOutlined />
-			<span>Discover</span>
-		</a>
 	</div>
 </div>
 

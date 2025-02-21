@@ -7,10 +7,10 @@
 	import { formatLongNumber } from '$lib/utils/intl/number';
 
 	import Avatar from '$lib/components/avatar.svelte';
+	import SquareArrowTopRightOutlined from '$lib/components/central-icons/square-arrow-top-right-outlined.svelte';
+	import OverflowMenu from '$lib/components/overflow-menu.svelte';
 	import RichtextRawRenderer from '$lib/components/richtext-raw-renderer.svelte';
 	import RichtextRenderer from '$lib/components/richtext-renderer.svelte';
-	import OverflowMenu from '$lib/components/overflow-menu.svelte';
-	import SquareArrowTopRightOutlined from '$lib/components/central-icons/square-arrow-top-right-outlined.svelte';
 
 	interface Props {
 		feed: AppBskyFeedDefs.GeneratorView;

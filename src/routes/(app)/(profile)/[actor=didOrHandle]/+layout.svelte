@@ -6,6 +6,7 @@
 	import { formatCompactNumber } from '$lib/utils/intl/number';
 
 	import ProfileAside from './components/profile-aside.svelte';
+	import ProfileMetaTags from './components/profile-meta-tags.svelte';
 
 	const { children, data }: LayoutProps = $props();
 
@@ -21,6 +22,8 @@
 	<link rel="alternate" href="{base}/{data.profile.did}/rss" type="application/rss+xml" />
 	<link rel="alternate" href="at://{data.profile.did}/app.bsky.actor.profile/self" />
 </svelte:head>
+
+<ProfileMetaTags {profile} />
 
 {#key profile.did}
 	<div class="profile-layout">

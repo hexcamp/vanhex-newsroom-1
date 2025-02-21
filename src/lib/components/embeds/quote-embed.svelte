@@ -39,7 +39,7 @@
 	import { parseAtUri } from '$lib/types/at-uri';
 
 	import Avatar from '$lib/components/avatar.svelte';
-	import RelativeTime from '$lib/components/islands/relative-time.svelte';
+	import Time from '$lib/components/islands/time.svelte';
 
 	import ContentHider from '../content-hider.svelte';
 
@@ -86,7 +86,7 @@
 			<span aria-hidden="true" class="dot">·</span>
 
 			<span class="date">
-				<RelativeTime date={record.createdAt} />
+				<Time date={record.createdAt} format="relative-time" />
 			</span>
 		</div>
 

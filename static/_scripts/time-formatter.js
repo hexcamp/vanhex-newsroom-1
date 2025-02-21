@@ -3,9 +3,20 @@
 let startOfYear = 0;
 let endOfYear = 0;
 
-const fmtAbsoluteLong = new Intl.DateTimeFormat('en-US', { dateStyle: 'long', timeStyle: 'short' });
-const fmtAbsShortWithYear = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' });
-const fmtAbsShort = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
+const fmtTime = new Intl.DateTimeFormat('en-US', {
+	timeStyle: 'short',
+});
+const fmtDateTime = new Intl.DateTimeFormat('en-US', {
+	dateStyle: 'long',
+	timeStyle: 'short',
+});
+const fmtShortDateWithYear = new Intl.DateTimeFormat('en-US', {
+	dateStyle: 'medium',
+});
+const fmtShortDate = new Intl.DateTimeFormat('en-US', {
+	month: 'short',
+	day: 'numeric',
+});
 
 /**
  * @param {string | number} date
@@ -15,7 +26,7 @@ const formatShortDate = (date) => {
 	const inst = new Date(date);
 	const time = inst.getTime();
 
-	if (isNaN(time)) {
+	if (Number.isNaN(time)) {
 		return 'N/A';
 	}
 
@@ -33,10 +44,24 @@ const formatShortDate = (date) => {
 	}
 
 	if (time >= startOfYear && time <= endOfYear) {
-		return fmtAbsShort.format(inst);
+		return fmtShortDate.format(inst);
 	}
 
-	return fmtAbsShortWithYear.format(inst);
+	return fmtShortDateWithYear.format(inst);
+};
+
+/**
+ * @param {string | number} date
+ * @returns {string}
+ */
+const formatTime = (date) => {
+	const inst = new Date(date);
+
+	if (Number.isNaN(inst.getTime())) {
+		return 'N/A';
+	}
+
+	return fmtTime.format(inst);
 };
 
 /**
@@ -46,11 +71,11 @@ const formatShortDate = (date) => {
 const formatLongDate = (date) => {
 	const inst = new Date(date);
 
-	if (isNaN(inst.getTime())) {
+	if (Number.isNaN(inst.getTime())) {
 		return 'N/A';
 	}
 
-	return fmtAbsoluteLong.format(inst);
+	return fmtDateTime.format(inst);
 };
 
 /** @type {Record<string, Intl.NumberFormat>} */
@@ -71,6 +96,10 @@ const WEEK = DAY * 7;
 const formatRelativeTime = (date, now) => {
 	const time = new Date(date).getTime();
 
+	if (Number.isNaN(time)) {
+		return 'N/A';
+	}
+
 	const delta = now - time;
 
 	if (delta < -NOW || delta > WEEK) {
@@ -88,10 +117,10 @@ const formatRelativeTime = (date, now) => {
 
 		// if it happened this year, don't show the year.
 		if (time >= startOfYear && time <= endOfYear) {
-			return fmtAbsShort.format(time);
+			return fmtShortDate.format(time);
 		}
 
-		return fmtAbsShortWithYear.format(time);
+		return fmtShortDateWithYear.format(time);
 	}
 
 	if (delta < NOW) {
@@ -132,8 +161,49 @@ const formatRelativeTime = (date, now) => {
 
 (() => {
 	/** @type {NodeListOf<HTMLTimeElement>} */
-	const nodes = document.querySelectorAll('time.isl-relative-time');
+	const nodes = document.querySelectorAll('time[data-format="short-date"]');
+	if (nodes.length === 0) {
+		return;
+	}
 
+	for (const node of nodes) {
+		const dt = node.dateTime;
+
+		node.textContent = formatShortDate(dt);
+		node.title = formatLongDate(dt);
+	}
+})();
+
+(() => {
+	/** @type {NodeListOf<HTMLTimeElement>} */
+	const nodes = document.querySelectorAll('time[data-format="long-date"]');
+	if (nodes.length === 0) {
+		return;
+	}
+
+	for (const node of nodes) {
+		node.textContent = formatLongDate(node.dateTime);
+	}
+})();
+
+(() => {
+	/** @type {NodeListOf<HTMLTimeElement>} */
+	const nodes = document.querySelectorAll('time[data-format="time"]');
+	if (nodes.length === 0) {
+		return;
+	}
+
+	for (const node of nodes) {
+		const dt = node.dateTime;
+
+		node.textContent = formatTime(dt);
+		node.title = formatLongDate(dt);
+	}
+})();
+
+(() => {
+	/** @type {NodeListOf<HTMLTimeElement>} */
+	const nodes = document.querySelectorAll('time[data-format="relative-time"]');
 	if (nodes.length === 0) {
 		return;
 	}
@@ -151,17 +221,4 @@ const formatRelativeTime = (date, now) => {
 
 	update();
 	setInterval(update, 60_000);
-})();
-
-(() => {
-	/** @type {NodeListOf<HTMLTimeElement>} */
-	const nodes = document.querySelectorAll('time.isl-long-date');
-
-	if (nodes.length === 0) {
-		return;
-	}
-
-	for (const node of nodes) {
-		node.textContent = formatLongDate(node.dateTime);
-	}
 })();

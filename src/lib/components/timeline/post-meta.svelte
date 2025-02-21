@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { AppBskyFeedDefs, AppBskyFeedPost } from '@atcute/client/lexicons';
 
-	import RelativeTime from '$lib/components/islands/relative-time.svelte';
+	import Time from '$lib/components/islands/time.svelte';
 
 	interface Props {
 		post: AppBskyFeedDefs.PostView;
@@ -32,7 +32,7 @@
 	<span aria-hidden="true" class="dot"> · </span>
 
 	<a href={postUrl} class="date">
-		<RelativeTime date={createdAt} />
+		<Time date={createdAt} format="relative-time" />
 	</a>
 </div>
 
@@ -40,8 +40,8 @@
 	.post-meta {
 		display: flex;
 		align-items: center;
-		color: var(--text-blurb);
 		min-width: 0;
+		color: var(--text-blurb);
 	}
 	.has-bottom-gutter {
 		margin-bottom: 2px;

@@ -18,6 +18,7 @@
 	import OverflowMenu from '$lib/components/overflow-menu.svelte';
 	import PageContainer from '$lib/components/page/page-container.svelte';
 	import RichtextRenderer from '$lib/components/richtext-renderer.svelte';
+	import Time from '$lib/components/islands/time.svelte';
 
 	const { data }: PageProps = $props();
 
@@ -104,9 +105,9 @@
 						<p class="meta">
 							<span class="date">
 								{#if !prevClusterDate || !isSameCalendarDate(date, prevClusterDate)}
-									{formatLongDate(date)}
+									<Time {date} format="long-date" />
 								{:else}
-									{formatTime(date)}
+									<Time {date} format="time" />
 								{/if}
 							</span>
 						</p>

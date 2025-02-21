@@ -11,7 +11,7 @@
 	import ThreadOutlined from '$lib/components/central-icons/thread-outlined.svelte';
 	import ContentHider from '$lib/components/content-hider.svelte';
 	import Embeds from '$lib/components/embeds/embeds.svelte';
-	import LongDate from '$lib/components/islands/long-date.svelte';
+	import Time from '$lib/components/islands/time.svelte';
 	import OverflowMenu from '$lib/components/overflow-menu.svelte';
 	import RichTextRenderer from '$lib/components/richtext-renderer.svelte';
 
@@ -93,7 +93,7 @@
 
 	<div class="footer">
 		<a href={postUrl} class="date">
-			<LongDate date={record.createdAt} />
+			<Time date={record.createdAt} format="long-date" />
 		</a>
 		<span aria-hidden="true" class="dot"> • </span>
 		<InteractionState threadgate={post.threadgate} />

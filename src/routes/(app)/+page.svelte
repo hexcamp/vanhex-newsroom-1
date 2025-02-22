@@ -46,6 +46,7 @@
 			<!-- svelte-ignore a11y_autofocus -->
 			<input
 				name="query"
+				required
 				autofocus={form?.place === 'redirect'}
 				placeholder="Enter bsky.app URL or AT-URI"
 				class="input"

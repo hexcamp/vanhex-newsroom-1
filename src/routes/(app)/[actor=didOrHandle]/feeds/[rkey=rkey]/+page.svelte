@@ -10,6 +10,8 @@
 	import PageListing from '$lib/components/page/page-listing.svelte';
 	import PostFeedItem from '$lib/components/timeline/post-feed-item.svelte';
 
+	import FeedMetaTags from './components/feed-meta-tags.svelte';
+
 	const { data }: PageProps = $props();
 
 	const rkey = $derived(parseAtUri(data.feed.uri).rkey);
@@ -24,6 +26,8 @@
 	<link rel="canonical" href="https://bsky.app/profile/{data.feed.creator.did}/feed/{rkey}" />
 	<link rel="alternate" href={data.feed.uri} />
 </svelte:head>
+
+<FeedMetaTags feed={data.feed} />
 
 <PageListing subject="timeline" {rootUrl} {nextUrl}>
 	{#each data.timeline.items as item (item.id)}

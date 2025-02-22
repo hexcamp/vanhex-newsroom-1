@@ -47,10 +47,12 @@
 
 	<p dir="auto" class="display-name">{feed.displayName?.trim()}</p>
 
-	{#if feed.descriptionFacets === undefined}
-		<RichtextRawRenderer text={feed.description ?? ''} />
-	{:else}
-		<RichtextRenderer text={feed.description ?? ''} facets={feed.descriptionFacets} />
+	{#if feed.description?.trim()}
+		{#if feed.descriptionFacets === undefined}
+			<RichtextRawRenderer text={feed.description ?? ''} />
+		{:else}
+			<RichtextRenderer text={feed.description ?? ''} facets={feed.descriptionFacets} />
+		{/if}
 	{/if}
 
 	<p class="metric">
@@ -96,6 +98,10 @@
 		color: var(--text-blurb);
 		font-size: 0.8125rem;
 		line-height: 1.25rem;
+
+		.display-name + & {
+			margin: 0;
+		}
 	}
 	.metric-link {
 		color: inherit;

@@ -18,6 +18,7 @@
 	import FeedEmbed from './feed-embed.svelte';
 	import ImageEmbed from './image-embed.svelte';
 	import ListEmbed from './list-embed.svelte';
+	import QuoteBlockedEmbed from './quote-blocked-embed.svelte';
 	import QuoteEmbed from './quote-embed.svelte';
 	import StarterpackEmbed from './starterpack-embed.svelte';
 	import VideoStandaloneEmbed from './video-standalone-embed.svelte';
@@ -75,15 +76,18 @@
 		<StarterpackEmbed embed={record} {large} />
 	{:else}
 		{@const uri = parseAtUri(record.uri)}
-		{@const resource = collectionToLabel(uri.collection)}
 
-		{@const isUnavailable =
-			resource &&
-			(record.$type === 'app.bsky.embed.record#viewNotFound' ||
-				record.$type === 'app.bsky.embed.record#viewBlocked' ||
-				record.$type === 'app.bsky.embed.record#viewDetached')}
+		{#if uri.collection === 'app.bsky.feed.post' && (record.$type === 'app.bsky.embed.record#viewBlocked' || record.$type === 'app.bsky.embed.record#viewDetached')}
+			<QuoteBlockedEmbed embed={record} {uri} />
+		{:else}
+			{@const resource = collectionToLabel(uri.collection)}
+			{@const isUnavailable =
+				resource &&
+				(record.$type === 'app.bsky.embed.record#viewNotFound' ||
+					record.$type === 'app.bsky.embed.record#viewBlocked')}
 
-		{@render Message(isUnavailable ? `This ${resource} is unavailable` : `Unsupported record embed`)}
+			{@render Message(isUnavailable ? `This ${resource} is unavailable` : `Unsupported record embed`)}
+		{/if}
 	{/if}
 {/snippet}
 

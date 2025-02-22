@@ -22,7 +22,7 @@
 	<div class="main">
 		<div class="content">
 			<a {href} class="name-wrapper">
-				<p class="display-name">{profile.displayName}</p>
+				<p class="display-name">{profile.displayName?.trim()}</p>
 				<p class="handle">@{profile.handle}</p>
 			</a>
 		</div>
@@ -86,7 +86,7 @@
 		white-space: nowrap;
 
 		&:empty {
-			color: var(--text-muted);
+			display: none;
 		}
 
 		.name-wrapper:hover & {

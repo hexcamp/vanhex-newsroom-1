@@ -20,15 +20,18 @@
 	const { media, record } = $derived(unwrapEmbedView(post.embed));
 
 	const description = $derived.by(() => {
-		let content = (post.record as AppBskyFeedPost.Record).text.trim();
+		const content = (post.record as AppBskyFeedPost.Record).text.trim();
+		let footer = '';
 
 		switch (media?.$type) {
 			case 'app.bsky.embed.external#view': {
-				content += `\n\n[contains external link]`;
+				footer && (footer += '\n');
+				footer += `[contains external link]`;
 				break;
 			}
 			case 'app.bsky.embed.video#view': {
-				content += `\n\n[contains video]`;
+				footer && (footer += '\n');
+				footer += `[contains video]`;
 				break;
 			}
 		}
@@ -37,19 +40,23 @@
 			const view = record.record;
 			switch (view.$type) {
 				case 'app.bsky.embed.record#viewRecord': {
-					content += `\n\n[quoting @${view.author.handle}]`;
+					footer && (footer += '\n');
+					footer += `[quoting @${view.author.handle}]`;
 					break;
 				}
 				case 'app.bsky.feed.defs#generatorView': {
-					content += `\n\n[contains embedded feed]`;
+					footer && (footer += '\n');
+					footer += `[contains embedded feed]`;
 					break;
 				}
 				case 'app.bsky.graph.defs#listView': {
-					content += `\n\n[contains embedded list]`;
+					footer && (footer += '\n');
+					footer += `[contains embedded list]`;
 					break;
 				}
 				case 'app.bsky.graph.defs#starterPackViewBasic': {
-					content += `\n\n[contains embedded starter pack]`;
+					footer && (footer += '\n');
+					footer += `[contains embedded starter pack]`;
 					break;
 				}
 				default: {
@@ -62,16 +69,15 @@
 							view.$type === 'app.bsky.embed.record#viewBlocked' ||
 							view.$type === 'app.bsky.embed.record#viewDetached');
 
-					content += isUnavailable
-						? `\n\n[contains unavailable ${resource} embed]`
-						: `\n\n[contains unknown embed]`;
+					footer && (footer += '\n');
+					footer += isUnavailable ? `[contains unavailable ${resource} embed]` : `[contains unknown embed]`;
 
 					break;
 				}
 			}
 		}
 
-		return content.trimStart();
+		return content + (footer ? `\n\n${footer}` : '');
 	});
 </script>
 

@@ -14,14 +14,11 @@ export const unwrapMediaEmbedView = (embed: AppBskyFeedDefs.PostView['embed']): 
 	switch (embed?.$type) {
 		case 'app.bsky.embed.recordWithMedia#view':
 			return embed.media;
-
-		case 'app.bsky.embed.external#view':
-			return embed;
-		case 'app.bsky.embed.images#view':
-			return embed;
-		case 'app.bsky.embed.video#view':
-			return embed;
+		case 'app.bsky.embed.record#view':
+			return;
 	}
+
+	return embed;
 };
 
 export const unwrapRecordEmbedView = (embed: AppBskyFeedDefs.PostView['embed']): Embed['record'] => {

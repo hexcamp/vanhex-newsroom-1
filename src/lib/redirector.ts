@@ -9,7 +9,7 @@ import {
 	BSKY_POST_LINK_RE,
 	BSKY_PROFILE_LINK_RE,
 	BSKY_STARTERPACK_LINK_RE,
-	BSKY_STARTERPACK_SHORT_LINK,
+	BSKY_GO_SHORTLINK_RE,
 } from './utils/bluesky/urls';
 import { safeUrlParse } from './utils/url';
 
@@ -74,7 +74,7 @@ export const redirectBskyUrl = (rawUrl: string): string | null | undefined => {
 		}
 
 		if ((match = BSKY_STARTERPACK_LINK_RE.exec(pathname))) {
-			const [, actor, rkey] = match;
+			const [, _page, actor, rkey] = match;
 
 			if (!isHandle(actor) && !isDid(actor)) {
 				return null;
@@ -90,10 +90,10 @@ export const redirectBskyUrl = (rawUrl: string): string | null | undefined => {
 	}
 
 	if (host === 'go.bsky.app') {
-		if ((match = BSKY_STARTERPACK_SHORT_LINK.exec(pathname))) {
+		if ((match = BSKY_GO_SHORTLINK_RE.exec(pathname))) {
 			const [, id] = match;
 
-			return `${base}/packs/${id}`;
+			return `${base}/go/${id}`;
 		}
 	}
 

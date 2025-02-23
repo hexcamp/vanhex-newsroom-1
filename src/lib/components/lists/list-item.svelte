@@ -19,7 +19,7 @@
 	const href = $derived(`${base}/${creator.did}/lists/${parseAtUri(list.uri).rkey}`);
 </script>
 
-<div class="feed-item">
+<div class="list-item">
 	<div class="main">
 		<Avatar type="list" src={list.avatar} {href} tabindex={-1} />
 
@@ -33,7 +33,7 @@
 </div>
 
 <style>
-	.feed-item {
+	.list-item {
 		display: flex;
 		flex-direction: column;
 		gap: 12px;

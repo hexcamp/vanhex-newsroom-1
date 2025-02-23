@@ -24,7 +24,7 @@
 <PageHeader title="Lists" />
 
 <PageListing subject="lists" {rootUrl} {nextUrl}>
-	{#each data.lists.items as feed (feed.uri)}
-		<ListItem item={feed} />
+	{#each data.lists.items as list (list.uri)}
+		<ListItem item={list} />
 	{/each}
 </PageListing>

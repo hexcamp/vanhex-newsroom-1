@@ -7,7 +7,7 @@ import {
 	BSKY_LIST_LINK_RE,
 	BSKY_POST_LINK_RE,
 	BSKY_PROFILE_LINK_RE,
-} from '$lib/utils/bsky-urls';
+} from '$lib/utils/bluesky/urls';
 import { asString, useSearchParams } from '$lib/utils/search-params';
 
 import { base } from '$app/paths';

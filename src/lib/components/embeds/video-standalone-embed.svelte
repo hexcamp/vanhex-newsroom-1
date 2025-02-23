@@ -8,7 +8,7 @@
 	import { dev } from '$app/environment';
 	import { base } from '$app/paths';
 
-	import { replaceVideoCdnUrl } from '$lib/utils/bsky';
+	import { replaceVideoCdnUrl } from '$lib/utils/bluesky/videos';
 
 	import PlaySolid from '$lib/components/central-icons/play-solid.svelte';
 	import Island from '$lib/components/island.svelte';

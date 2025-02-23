@@ -10,7 +10,7 @@ import {
 	BSKY_PROFILE_LINK_RE,
 	BSKY_STARTERPACK_LINK_RE,
 	BSKY_STARTERPACK_SHORT_LINK,
-} from './utils/bsky-urls';
+} from './utils/bluesky/urls';
 import { safeUrlParse } from './utils/url';
 
 export const redirectBskyUrl = (rawUrl: string): string | null | undefined => {

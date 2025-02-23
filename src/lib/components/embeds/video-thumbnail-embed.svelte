@@ -3,7 +3,7 @@
 
 	import type { AppBskyEmbedVideo } from '@atcute/client/lexicons';
 
-	import { replaceVideoCdnUrl } from '$lib/utils/bsky';
+	import { replaceVideoCdnUrl } from '$lib/utils/bluesky/videos';
 
 	import PlaySolid from '$lib/components/central-icons/play-solid.svelte';
 

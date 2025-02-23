@@ -32,7 +32,7 @@
 <svelte:head>
 	<meta property="og:site_name" content={PUBLIC_APP_NAME} />
 	<meta property="twitter:card" content="summary" />
-	<meta property="og:url" content="{PUBLIC_APP_URL}/{uri.repo}/feeds/{uri.rkey}" />
+	<meta property="og:url" content="{PUBLIC_APP_URL}/{uri.repo}/lists/{uri.rkey}" />
 	<meta property="og:title" content={list.name.trim()} />
 	<meta property="og:description" content={description} />
 

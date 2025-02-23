@@ -20,10 +20,11 @@
 
 	interface Props {
 		post: AppBskyFeedDefs.PostView;
+		threadgate?: AppBskyFeedDefs.ThreadgateView;
 		prev?: boolean;
 	}
 
-	const { post, prev = false }: Props = $props();
+	const { post, threadgate, prev = false }: Props = $props();
 
 	const uri = $derived(parseAtUri(post.uri));
 
@@ -96,7 +97,7 @@
 			<Time date={record.createdAt} format="long-date" />
 		</a>
 		<span aria-hidden="true" class="dot"> • </span>
-		<InteractionState threadgate={post.threadgate} />
+		<InteractionState {threadgate} />
 	</div>
 
 	<MainPostMetrics {post} />

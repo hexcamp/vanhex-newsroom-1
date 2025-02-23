@@ -69,7 +69,7 @@
 
 	<div class="thread">
 		<div class="main" id="main">
-			<MainPost post={main} prev={ancestors.length > 0} />
+			<MainPost post={main} threadgate={data.threadgate} prev={ancestors.length > 0} />
 		</div>
 
 		<div class="descendants">

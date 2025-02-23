@@ -1,0 +1,25 @@
+import { simpleFetchHandler, XRPC } from '@atcute/client';
+
+import { PUBLIC_APPVIEW_URL } from '$env/static/public';
+import type { PageLoad } from './$types';
+
+export const load: PageLoad = async ({ url, fetch, parent }) => {
+	const rpc = new XRPC({ handler: simpleFetchHandler({ service: PUBLIC_APPVIEW_URL }) });
+
+	const { pack } = await parent();
+
+	// It shouldn't be missing, but oh well.
+	if (!pack.list) {
+		return { members: { cursor: undefined, items: [] } };
+	}
+
+	const { data } = await rpc.get('app.bsky.graph.getList', {
+		params: {
+			list: pack.list.uri,
+			limit: 50,
+			cursor: url.searchParams.get('cursor') || undefined,
+		},
+	});
+
+	return { members: { cursor: data.cursor, items: data.items } };
+};

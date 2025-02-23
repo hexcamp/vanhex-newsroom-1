@@ -1,0 +1,28 @@
+import { simpleFetchHandler, XRPC } from '@atcute/client';
+
+import { PUBLIC_APPVIEW_URL } from '$env/static/public';
+import type { PageLoad } from './$types';
+
+import { fetchTimeline, TimelineType } from '$lib/queries/timeline';
+import { type AtUri } from '$lib/types/at-uri';
+
+export const load: PageLoad = async ({ url, fetch, parent }) => {
+	const rpc = new XRPC({ handler: simpleFetchHandler({ service: PUBLIC_APPVIEW_URL }) });
+
+	const { pack } = await parent();
+
+	if (!pack.list) {
+		return { timeline: { cursor: undefined, items: [] } };
+	}
+
+	const timeline = await fetchTimeline({
+		rpc,
+		params: {
+			type: TimelineType.USER_LIST,
+			list: pack.list.uri as AtUri,
+			cursor: url.searchParams.get('cursor') || undefined,
+		},
+	});
+
+	return { timeline };
+};

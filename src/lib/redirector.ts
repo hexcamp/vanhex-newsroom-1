@@ -159,11 +159,6 @@ export const redirectOtherUrl = (rawUrl: string): string | null | undefined => {
 			return null;
 		}
 
-		const viewtype = url.searchParams.get('viewtype');
-		if (viewtype === 'unroll') {
-			return redirect.replace(/#main$/, '/unroll');
-		}
-
 		return redirect;
 	}
 

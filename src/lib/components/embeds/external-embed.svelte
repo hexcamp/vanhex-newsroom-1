@@ -16,13 +16,15 @@
 	const external = $derived(embed.external);
 
 	const domain = $derived(safeUrlParse(external.uri)?.host.replace(/^www\./, ''));
-	const href = $derived.by(() => {
-		const uri = external.uri;
-		return redirectBskyUrl(uri) || (domain ? uri : '');
-	});
+	const redirectUrl = $derived(redirectBskyUrl(external.uri));
 </script>
 
-<a target="_blank" {href} rel="noopener noreferrer nofollow" class="external-embed">
+<a
+	target={!redirectUrl ? '_blank' : undefined}
+	href={redirectUrl || (domain ? external.uri : '')}
+	rel="noopener noreferrer nofollow"
+	class="external-embed"
+>
 	{#if external.thumb}
 		<img loading="lazy" src={external.thumb} alt="" class="thumbnail" />
 	{/if}

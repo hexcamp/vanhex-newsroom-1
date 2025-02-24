@@ -4,6 +4,8 @@
 	import { base } from '$app/paths';
 
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
 
 	import Avatar from '$lib/components/avatar.svelte';
 	import SquareArrowTopRightOutlined from '$lib/components/central-icons/square-arrow-top-right-outlined.svelte';
@@ -44,13 +46,13 @@
 		]}
 	/>
 
-	<p dir="auto" class="display-name">{record.name.trim()}</p>
+	<p dir="auto" class="display-name">{normalizeDisplayName(record.name)}</p>
 
-	{#if record.description?.trim()}
+	{#if record.description}
 		{#if record.descriptionFacets === undefined}
-			<RichtextRawRenderer text={record.description ?? ''} />
+			<RichtextRawRenderer text={trimRichText(record.description)} />
 		{:else}
-			<RichtextRenderer text={record.description ?? ''} facets={record.descriptionFacets} />
+			<RichtextRenderer text={record.description} facets={record.descriptionFacets} />
 		{/if}
 	{/if}
 

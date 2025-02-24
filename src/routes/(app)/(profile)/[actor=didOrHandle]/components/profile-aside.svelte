@@ -4,6 +4,7 @@
 	import { base } from '$app/paths';
 
 	import { findLabel, FlagsBlurMedia } from '$lib/moderation';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
 	import { trimRichText } from '$lib/utils/bluesky/richtext';
 	import { formatCompactNumber, formatLongNumber } from '$lib/utils/intl/number';
 
@@ -61,7 +62,9 @@
 	/>
 
 	<div class="name-wrapper">
-		<p dir="auto" class="display-name">{profile.displayName?.trim() || profile.handle.slice(0, 64)}</p>
+		<p dir="auto" class="display-name">
+			{normalizeDisplayName(profile.displayName ?? '') || profile.handle.slice(0, 64)}
+		</p>
 		<p class="handle">@{profile.handle}</p>
 	</div>
 

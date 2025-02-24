@@ -4,6 +4,9 @@
 	import { base } from '$app/paths';
 
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
+	import { truncateMiddle } from '$lib/utils/strings';
 
 	import Avatar from '$lib/components/avatar.svelte';
 
@@ -24,12 +27,12 @@
 		<Avatar type="starterpack" {href} tabindex={-1} />
 
 		<a {href} class="info">
-			<p class="name">{record.name}</p>
-			<p class="creator">Starter pack by @{creator.handle}</p>
+			<p class="name">{normalizeDisplayName(record.name)}</p>
+			<p class="creator">Starter pack by @{truncateMiddle(creator.handle, 29)}</p>
 		</a>
 	</div>
 
-	<p class="description">{record.description?.trim()}</p>
+	<p class="description">{trimRichText(record.description ?? '')}</p>
 </div>
 
 <style>
@@ -52,7 +55,9 @@
 	}
 
 	.info {
+		min-width: 0;
 		color: inherit;
+		overflow-wrap: break-word;
 	}
 	.name {
 		font-weight: 700;
@@ -61,7 +66,6 @@
 			text-decoration: underline;
 		}
 	}
-
 	.creator {
 		color: var(--text-blurb);
 		font-size: 0.8125rem;

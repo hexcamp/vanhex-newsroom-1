@@ -4,6 +4,9 @@
 
 <script lang="ts">
 	import type { AppBskyEmbedImages } from '@atcute/client/lexicons';
+
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
+
 	import ImageAlt from './components/image-alt.svelte';
 
 	interface Props {
@@ -86,7 +89,7 @@
 
 {#snippet Image(index: number)}
 	{@const image = images[index]}
-	{@const alt = image.alt.trim()}
+	{@const alt = trimRichText(image.alt)}
 
 	<img loading="lazy" src={image.thumb} {alt} class={`image` + (blur ? ` is-blurred` : ``)} />
 

@@ -3,6 +3,9 @@
 
 	import { base } from '$app/paths';
 
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
+
 	import Avatar from '$lib/components/avatar.svelte';
 
 	interface Props {
@@ -22,12 +25,12 @@
 	<div class="main">
 		<div class="content">
 			<a {href} class="name-wrapper">
-				<p class="display-name">{profile.displayName?.trim()}</p>
+				<p class="display-name">{normalizeDisplayName(profile.displayName ?? '')}</p>
 				<p class="handle">@{profile.handle}</p>
 			</a>
 		</div>
 
-		<p class="bio">{'description' in profile ? profile.description?.trim() : undefined}</p>
+		<p class="bio">{'description' in profile ? trimRichText(profile.description ?? '') : ''}</p>
 	</div>
 </div>
 

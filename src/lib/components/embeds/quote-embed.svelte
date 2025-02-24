@@ -5,10 +5,12 @@
 
 	import { findLabel, FlagsBlurContent, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
+	import { unwrapMediaEmbedView } from '$lib/utils/bluesky/embeds';
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
 
 	import Avatar from '$lib/components/avatar.svelte';
 	import Time from '$lib/components/islands/time.svelte';
-	import { unwrapMediaEmbedView } from '$lib/utils/bluesky/embeds';
 
 	import ContentHider from '../content-hider.svelte';
 
@@ -23,10 +25,10 @@
 	const { embed: quote, large = false }: Props = $props();
 
 	const record = $derived(quote.value as AppBskyFeedPost.Record);
-	const text = $derived(record.text.trim());
+	const text = $derived(trimRichText(record.text));
 
 	const author = $derived(quote.author);
-	const authorName = $derived(author.displayName?.trim());
+	const authorName = $derived(normalizeDisplayName(author.displayName ?? ''));
 
 	const embed = $derived(quote.embeds?.[0]);
 	const media = $derived(unwrapMediaEmbedView(embed));

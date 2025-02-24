@@ -4,6 +4,9 @@
 	import { PUBLIC_APP_NAME, PUBLIC_APP_URL } from '$env/static/public';
 
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
+	import { truncateMiddle } from '$lib/utils/strings';
 
 	interface Props {
 		pack: AppBskyGraphDefs.StarterPackView;
@@ -15,11 +18,11 @@
 	const record = $derived(pack.record as AppBskyGraphStarterpack.Record);
 
 	const description = $derived.by(() => {
-		const desc = record.description?.trim();
+		const desc = trimRichText(record.description ?? '');
 
 		let str = '';
 
-		str += `Starter pack by @${pack.creator.handle}`;
+		str += `Starter pack by @${truncateMiddle(pack.creator.handle, 29)}`;
 
 		if (desc) {
 			str += `\n\n${desc}`;
@@ -33,6 +36,6 @@
 	<meta property="og:site_name" content={PUBLIC_APP_NAME} />
 	<meta property="twitter:card" content="summary" />
 	<meta property="og:url" content="{PUBLIC_APP_URL}/{uri.repo}/packs/{uri.rkey}" />
-	<meta property="og:title" content={record.name.trim()} />
+	<meta property="og:title" content={normalizeDisplayName(record.name)} />
 	<meta property="og:description" content={description} />
 </svelte:head>

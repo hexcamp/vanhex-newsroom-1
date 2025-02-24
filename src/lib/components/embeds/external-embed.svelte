@@ -66,6 +66,8 @@
 
 	.meta {
 		padding: 12px;
+		min-width: 0;
+		overflow-wrap: break-word;
 	}
 
 	.title {
@@ -75,7 +77,6 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 		line-clamp: 2;
-		overflow-wrap: break-word;
 
 		&:empty {
 			display: none;
@@ -90,7 +91,6 @@
 		-webkit-line-clamp: 2;
 		line-clamp: 2;
 		text-wrap: pretty;
-		overflow-wrap: break-word;
 
 		&:empty {
 			display: none;

@@ -5,6 +5,7 @@
 
 	import { findLabel, FlagsBlurContent, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
 
 	import Avatar from '$lib/components/avatar.svelte';
 	import SquareArrowTopRightOutlined from '$lib/components/central-icons/square-arrow-top-right-outlined.svelte';
@@ -29,7 +30,7 @@
 	const uri = $derived(parseAtUri(post.uri));
 
 	const author = $derived(post.author);
-	const authorName = $derived(author.displayName?.trim());
+	const authorName = $derived(normalizeDisplayName(author.displayName ?? ''));
 
 	const record = $derived(post.record as AppBskyFeedPost.Record);
 

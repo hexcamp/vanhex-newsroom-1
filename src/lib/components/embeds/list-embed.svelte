@@ -5,7 +5,9 @@
 
 	import { findLabel, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
 	import { purposeToLabel } from '$lib/utils/bluesky/lists';
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
 	import { truncateRight } from '$lib/utils/strings';
 
 	import Avatar from '$lib/components/avatar.svelte';
@@ -26,12 +28,12 @@
 		<Avatar type="list" src={list.avatar} blur={blurAvi} />
 
 		<div class="info">
-			<p class="name">{list.name}</p>
+			<p class="name">{normalizeDisplayName(list.name)}</p>
 			<p class="creator">{purposeToLabel(list.purpose)} by @{creator.handle}</p>
 		</div>
 	</div>
 
-	<p class="description">{truncateRight(list.description?.trim() ?? '', 190)}</p>
+	<p class="description">{truncateRight(trimRichText(list.description ?? ''), 190)}</p>
 </a>
 
 <style>
@@ -59,10 +61,13 @@
 		}
 	}
 
+	.info {
+		min-width: 0;
+		overflow-wrap: break-word;
+	}
 	.name {
 		font-weight: 700;
 	}
-
 	.creator {
 		color: var(--text-blurb);
 		font-size: 0.8125rem;

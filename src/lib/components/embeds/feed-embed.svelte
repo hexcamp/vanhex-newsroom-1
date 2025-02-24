@@ -5,6 +5,8 @@
 
 	import { findLabel, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
 	import { truncateRight } from '$lib/utils/strings';
 
 	import Avatar from '$lib/components/avatar.svelte';
@@ -25,12 +27,12 @@
 		<Avatar type="generator" src={feed.avatar} blur={blurAvi} />
 
 		<div class="info">
-			<p class="name">{feed.displayName}</p>
+			<p class="name">{normalizeDisplayName(feed.displayName)}</p>
 			<p class="creator">Feed by @{creator.handle}</p>
 		</div>
 	</div>
 
-	<p class="description">{truncateRight(feed.description?.trim() ?? '', 190)}</p>
+	<p class="description">{truncateRight(trimRichText(feed.description ?? ''), 190)}</p>
 </a>
 
 <style>
@@ -58,10 +60,13 @@
 		}
 	}
 
+	.info {
+		min-width: 0;
+		overflow-wrap: break-word;
+	}
 	.name {
 		font-weight: 700;
 	}
-
 	.creator {
 		color: var(--text-blurb);
 		font-size: 0.8125rem;

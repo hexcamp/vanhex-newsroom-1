@@ -4,6 +4,8 @@
 	import { base } from '$app/paths';
 
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
 	import { formatLongNumber } from '$lib/utils/intl/number';
 
 	import Avatar from '$lib/components/avatar.svelte';
@@ -44,13 +46,13 @@
 		]}
 	/>
 
-	<p dir="auto" class="display-name">{list.name.trim()}</p>
+	<p dir="auto" class="display-name">{normalizeDisplayName(list.name)}</p>
 
-	{#if list.description?.trim()}
+	{#if list.description}
 		{#if list.descriptionFacets === undefined}
-			<RichtextRawRenderer text={list.description ?? ''} />
+			<RichtextRawRenderer text={trimRichText(list.description)} />
 		{:else}
-			<RichtextRenderer text={list.description ?? ''} facets={list.descriptionFacets} />
+			<RichtextRenderer text={list.description} facets={list.descriptionFacets} />
 		{/if}
 	{/if}
 

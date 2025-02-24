@@ -4,9 +4,12 @@
 	import { base } from '$app/paths';
 
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
+	import { formatLongNumber } from '$lib/utils/intl/number';
+	import { truncateMiddle } from '$lib/utils/strings';
 
 	import Avatar from '$lib/components/avatar.svelte';
-	import { formatLongNumber } from '$lib/utils/intl/number';
 
 	interface Props {
 		item: AppBskyFeedDefs.GeneratorView;
@@ -24,12 +27,12 @@
 		<Avatar type="generator" src={feed.avatar} {href} tabindex={-1} />
 
 		<a {href} class="info">
-			<p class="name">{feed.displayName}</p>
-			<p class="creator">Feed by @{creator.handle}</p>
+			<p class="name">{normalizeDisplayName(feed.displayName)}</p>
+			<p class="creator">Feed by @{truncateMiddle(creator.handle, 29)}</p>
 		</a>
 	</div>
 
-	<p class="description">{feed.description?.trim()}</p>
+	<p class="description">{trimRichText(feed.description ?? '')}</p>
 
 	<p class="metric">
 		{feed.likeCount === 1
@@ -58,7 +61,9 @@
 	}
 
 	.info {
+		min-width: 0;
 		color: inherit;
+		overflow-wrap: break-word;
 	}
 	.name {
 		font-weight: 700;
@@ -67,7 +72,6 @@
 			text-decoration: underline;
 		}
 	}
-
 	.creator {
 		color: var(--text-blurb);
 		font-size: 0.8125rem;

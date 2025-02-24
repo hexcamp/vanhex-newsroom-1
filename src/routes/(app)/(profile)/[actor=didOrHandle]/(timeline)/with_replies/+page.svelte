@@ -5,6 +5,7 @@
 	import type { PageProps } from './$types';
 
 	import { paginate } from '$lib/utils/pagination';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
 
 	import PageListing from '$lib/components/page/page-listing.svelte';
 	import PostFeedItem from '$lib/components/timeline/post-feed-item.svelte';
@@ -16,10 +17,12 @@
 	);
 
 	const title = $derived.by(() => {
+		const name = normalizeDisplayName(data.profile.displayName ?? '');
+
 		let str = ``;
 
-		if (data.profile.displayName?.trim()) {
-			str += `${data.profile.displayName.trim()} (@${data.profile.handle})`;
+		if (name) {
+			str += `${name} (@${data.profile.handle})`;
 		} else {
 			str += `@${data.profile.handle}`;
 		}

@@ -6,6 +6,7 @@ import type { RequestHandler } from './$types';
 
 import { buildTimelineSlices } from '$lib/models/timeline';
 import { createRssFeed, feedPostToFeedItem } from '$lib/rss';
+import { normalizeDisplayName } from '$lib/utils/bluesky/display';
 
 export const GET: RequestHandler = async ({ params, fetch }) => {
 	const rpc = new XRPC({ handler: simpleFetchHandler({ service: PUBLIC_APPVIEW_URL }) });
@@ -80,7 +81,7 @@ export const GET: RequestHandler = async ({ params, fetch }) => {
 
 	const rss = createRssFeed({
 		meta: {
-			title: profile.displayName?.trim() || `@${profile.handle}`,
+			title: normalizeDisplayName(profile.displayName ?? '') || `@${profile.handle}`,
 			description: `Posts from @${profile.handle}`,
 			pageUrl: `${PUBLIC_APP_URL}/${profile.did}`,
 			rssUrl: `${PUBLIC_APP_URL}/${profile.did}/rss`,

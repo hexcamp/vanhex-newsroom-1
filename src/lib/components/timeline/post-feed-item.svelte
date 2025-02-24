@@ -6,6 +6,7 @@
 	import type { UiTimelineItem } from '$lib/models/timeline';
 	import { findLabel, FlagsBlurContent, FlagsBlurMedia } from '$lib/moderation';
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
 
 	import ArrowsRepeatRightLeftOutlined from '$lib/components/central-icons/arrows-repeat-right-left-outlined.svelte';
 	import PinOutlined from '$lib/components/central-icons/pin-outlined.svelte';
@@ -48,13 +49,14 @@
 
 			{#if reason.$type === 'app.bsky.feed.defs#reasonRepost'}
 				{@const by = reason.by}
+				{@const name = normalizeDisplayName(by.displayName ?? '') || by.handle.slice(0, 64)}
 
 				<div class="context">
 					<div class="aside">
 						<ArrowsRepeatRightLeftOutlined />
 					</div>
 					<a href="/{by.did}" class="main">
-						<span dir="auto" class="name">{by.displayName?.trim() || by.handle.slice(0, 64)}</span>
+						<span dir="auto" class="name">{name}</span>
 						<span class="affix">{' '}reposted</span>
 					</a>
 				</div>
@@ -87,10 +89,11 @@
 				<p class="reply-context">
 					{#if parent?.$type === 'app.bsky.feed.defs#postView'}
 						{@const author = parent.author}
+						{@const name = normalizeDisplayName(author.displayName ?? '') || author.handle.slice(0, 64)}
 
 						Replying to
 						<a href="/{author.did}" dir="auto">
-							{author.displayName?.trim() || `@${author.handle}`}
+							{name}
 						</a>
 					{:else if parent?.$type === 'app.bsky.feed.defs#blockedPost'}
 						Replying to a blocked post

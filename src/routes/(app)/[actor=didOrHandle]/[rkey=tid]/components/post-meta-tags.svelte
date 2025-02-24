@@ -4,9 +4,11 @@
 	import { PUBLIC_APP_NAME, PUBLIC_APP_URL } from '$env/static/public';
 
 	import { parseAtUri } from '$lib/types/at-uri';
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
 	import { unwrapEmbedView } from '$lib/utils/bluesky/embeds';
-	import { truncateMiddle } from '$lib/utils/strings';
 	import { collectionToLabel } from '$lib/utils/bluesky/records';
+	import { trimRichText } from '$lib/utils/bluesky/richtext';
+	import { truncateMiddle } from '$lib/utils/strings';
 
 	interface Props {
 		post: AppBskyFeedDefs.PostView;
@@ -17,10 +19,13 @@
 	const uri = $derived(parseAtUri(post.uri));
 
 	const author = $derived(post.author);
+	const displayName = $derived(normalizeDisplayName(author.displayName ?? ''));
+	const handle = $derived(truncateMiddle(author.handle, 29));
+
 	const { media, record } = $derived(unwrapEmbedView(post.embed));
 
 	const description = $derived.by(() => {
-		const content = (post.record as AppBskyFeedPost.Record).text.trim();
+		const content = trimRichText((post.record as AppBskyFeedPost.Record).text);
 		let footer = '';
 
 		switch (media?.$type) {
@@ -41,7 +46,7 @@
 			switch (view.$type) {
 				case 'app.bsky.embed.record#viewRecord': {
 					footer && (footer += '\n');
-					footer += `[quoting @${view.author.handle}]`;
+					footer += `[quoting @${truncateMiddle(view.author.handle, 29)}]`;
 					break;
 				}
 				case 'app.bsky.feed.defs#generatorView': {
@@ -88,12 +93,7 @@
 	<meta property="og:url" content="{PUBLIC_APP_URL}/{uri.repo}/{uri.rkey}#main" />
 	<meta property="profile:username" content={author.handle} />
 	<meta property="og:published_time" content={post.indexedAt} />
-	<meta
-		property="og:title"
-		content={author.displayName?.trim()
-			? `${author.displayName.trim()} (@${truncateMiddle(post.author.handle, 29)})`
-			: `@${truncateMiddle(post.author.handle, 29)}`}
-	/>
+	<meta property="og:title" content={displayName ? `${displayName} (@${handle})` : `@${handle}`} />
 	<meta property="og:description" content={description} />
 
 	{#if media?.$type === 'app.bsky.embed.images#view'}

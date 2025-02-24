@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { AppBskyFeedDefs, AppBskyFeedPost } from '@atcute/client/lexicons';
 
+	import { normalizeDisplayName } from '$lib/utils/bluesky/display';
+
 	import Time from '$lib/components/islands/time.svelte';
 
 	interface Props {
@@ -13,7 +15,7 @@
 	const { post, postUrl, authorUrl, gutterBottom = false }: Props = $props();
 
 	const author = $derived(post.author);
-	const authorName = $derived(author.displayName?.trim());
+	const authorName = $derived(normalizeDisplayName(author.displayName ?? ''));
 
 	const createdAt = $derived((post.record as AppBskyFeedPost.Record).createdAt);
 </script>

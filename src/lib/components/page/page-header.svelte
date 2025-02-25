@@ -14,10 +14,10 @@
 	.page-header {
 		position: sticky;
 		top: 0;
+		z-index: 1;
 		border-bottom: 1px solid var(--divider-sm);
 		background: var(--bg-primary);
 		padding: 12px 16px;
-		z-index: 1;
 	}
 
 	.title {

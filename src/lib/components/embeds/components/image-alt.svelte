@@ -30,17 +30,23 @@
 		bottom: 0;
 		align-items: center;
 		appearance: none;
+		opacity: 0.6;
 		cursor: pointer;
 		margin: 8px;
 		border: 0;
 		border-radius: 4px;
-		background: rgb(10 10 10 / 0.6);
+		background: rgb(10 10 10);
 		padding: 0 4px;
 		height: 18px;
 		color: #ffffff;
 		font-weight: 700;
 		font-size: 9px;
 		letter-spacing: 0.05em;
+
+		&:hover {
+			opacity: 1;
+			background: rgb(30 30 30);
+		}
 	}
 
 	.dialog {

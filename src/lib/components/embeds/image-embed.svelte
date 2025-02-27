@@ -91,7 +91,9 @@
 	{@const image = images[index]}
 	{@const alt = trimRichText(image.alt)}
 
-	<img loading="lazy" src={image.thumb} {alt} class={`image` + (blur ? ` is-blurred` : ``)} />
+	<a href={image.fullsize.replace('@jpeg', '@png')} target="_blank" rel="noopener" class="link">
+		<img loading="lazy" src={image.thumb} {alt} class={`image` + (blur ? ` is-blurred` : ``)} />
+	</a>
 
 	{#if standalone && alt}
 		<ImageAlt {alt} />
@@ -163,9 +165,21 @@
 		max-height: 320px;
 	}
 
-	.image {
+	.item,
+	.single-item {
+		&:has(.link:focus-visible) {
+			outline: 2px solid var(--accent);
+			outline-offset: -1px;
+		}
+	}
+
+	.link {
 		position: absolute;
 		inset: 0;
+		outline: none;
+	}
+
+	.image {
 		background: var(--bg-slate);
 		width: 100%;
 		height: 100%;

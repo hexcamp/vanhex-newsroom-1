@@ -10,6 +10,8 @@ import {
 	BSKY_PROFILE_LINK_RE,
 	BSKY_STARTERPACK_LINK_RE,
 	BSKY_GO_SHORTLINK_RE,
+	BSKY_SEARCH_LINK_RE,
+	BSKY_HASHTAG_LINK_RE,
 } from './utils/bluesky/urls';
 import { safeUrlParse } from './utils/url';
 
@@ -84,6 +86,21 @@ export const redirectBskyUrl = (rawUrl: string): string | null | undefined => {
 			}
 
 			return `${base}/${actor}/packs/${rkey}`;
+		}
+
+		if ((match = BSKY_SEARCH_LINK_RE.exec(pathname))) {
+			const query = url.searchParams.get('q');
+			if (query === null) {
+				return null;
+			}
+
+			return `${base}/search/posts?q=${encodeURIComponent(query)}`;
+		}
+
+		if ((match = BSKY_HASHTAG_LINK_RE.exec(pathname))) {
+			const [, tag] = match;
+
+			return `${base}/search/posts?q=${encodeURIComponent('#' + tag)}`;
 		}
 
 		return null;

@@ -1,7 +1,7 @@
 export type Handle = `${string}.${string}`;
 
 const HANDLE_RE =
-	/^(?=.{4,253}$)(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+([a-zA-Z][a-zA-Z0-9-]{0,61}[a-zA-Z0-9])$/;
+	/^(?=.{4,253}$)(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+([a-zA-Z][a-zA-Z0-9-]{0,61}[a-zA-Z])$/;
 
 export const isHandle = (input: string): input is Handle => {
 	return input.length >= 3 && input.length <= 253 && HANDLE_RE.test(input);

@@ -50,26 +50,17 @@
 				{#if profile.associated?.feedgens}
 					{@const count = profile.associated.feedgens}
 
-					<a class="association" href="{base}/{did}/feeds">
-						<span class="association-count">{formatCompactNumber(count)}</span>
-						{count === 1 ? `feed` : `feeds`}
-					</a>
+					{@render Associated(`${base}/${did}/feeds`, count, `feed`, `feeds`)}
 				{/if}
 				{#if profile.associated?.lists}
 					{@const count = profile.associated.lists}
 
-					<a class="association" href="{base}/{did}/lists">
-						<span class="association-count">{formatCompactNumber(count)}</span>
-						{count === 1 ? `list` : `lists`}
-					</a>
+					{@render Associated(`${base}/${did}/lists`, count, `list`, `lists`)}
 				{/if}
 				{#if profile.associated?.starterPacks}
 					{@const count = profile.associated.starterPacks}
 
-					<a class="association" href="{base}/{did}/packs">
-						<span class="association-count">{formatCompactNumber(count)}</span>
-						{count === 1 ? `starter pack` : `starter packs`}
-					</a>
+					{@render Associated(`${base}/${did}/packs`, count, `starter pack`, `starter packs`)}
 				{/if}
 			</div>
 		</div>
@@ -79,6 +70,13 @@
 		</div>
 	</div>
 {/key}
+
+{#snippet Associated(href: string, count: number, one: string, many: string)}
+	<a class="association" {href}>
+		<span class="association-count">{formatCompactNumber(count)}</span>
+		{count === 1 ? one : many}
+	</a>
+{/snippet}
 
 <style>
 	.profile-layout {

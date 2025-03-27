@@ -44,11 +44,11 @@
 	<div class="contents">
 		<ContentHider {blur}>
 			<RichtextRenderer text={record.text} facets={record.facets} />
-		</ContentHider>
 
-		{#if post.embed}
-			<Embeds {post} embed={post.embed} />
-		{/if}
+			{#if post.embed}
+				<Embeds {post} embed={post.embed} />
+			{/if}
+		</ContentHider>
 
 		<PostMetrics {post} />
 

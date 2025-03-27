@@ -87,11 +87,11 @@
 
 	<ContentHider {blur}>
 		<RichTextRenderer text={record.text} facets={record.facets} large />
-	</ContentHider>
 
-	{#if post.embed}
-		<Embeds {post} embed={post.embed} large />
-	{/if}
+		{#if post.embed}
+			<Embeds {post} embed={post.embed} large />
+		{/if}
+	</ContentHider>
 
 	<div class="footer">
 		<a href={postUrl} class="date">

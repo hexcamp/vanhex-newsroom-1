@@ -13,6 +13,7 @@
 
 <svelte:head>
 	<title>{PUBLIC_APP_NAME}</title>
+	<meta name="description" content="JavaScript-optional public web frontend for Bluesky." />
 </svelte:head>
 
 <div class="wrapper">

@@ -32,7 +32,7 @@
 
 <svelte:head>
 	<title>{record.name.trim()} by @{data.pack.creator.handle} — {PUBLIC_APP_NAME}</title>
-	<link rel="canonical" href="https://bsky.app/starter-pack/{uri.repo}/{uri.rkey}" />
+	<link rel="canonical" href="{base}/{uri.repo}/packs/{uri.rkey}" />
 	<link rel="alternate" href={data.pack.uri} />
 </svelte:head>
 

@@ -23,7 +23,7 @@
 
 <svelte:head>
 	<title>{data.feed.displayName} by @{data.feed.creator.handle} — {PUBLIC_APP_NAME}</title>
-	<link rel="canonical" href="https://bsky.app/profile/{data.feed.creator.did}/feed/{rkey}" />
+	<link rel="canonical" href="{base}/{data.feed.creator.did}/feeds/{rkey}" />
 	<link rel="alternate" href={data.feed.uri} />
 </svelte:head>
 

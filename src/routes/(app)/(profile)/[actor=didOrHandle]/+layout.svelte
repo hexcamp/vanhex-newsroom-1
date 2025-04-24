@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-	<link rel="canonical" href="https://bsky.app/profile/{data.profile.did}" />
+	<link rel="canonical" href="{base}/{data.profile.did}" />
 	<link rel="alternate" href="{base}/{data.profile.did}/rss" type="application/rss+xml" />
 	<link rel="alternate" href="at://{data.profile.did}/app.bsky.actor.profile/self" />
 </svelte:head>

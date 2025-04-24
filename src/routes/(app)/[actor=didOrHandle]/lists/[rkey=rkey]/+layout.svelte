@@ -26,7 +26,7 @@
 </script>
 
 <svelte:head>
-	<link rel="canonical" href="https://bsky.app/profile/{uri.repo}/lists/{uri.rkey}" />
+	<link rel="canonical" href="{base}/{uri.repo}/lists/{uri.rkey}" />
 	<link rel="alternate" href={data.list.uri} />
 </svelte:head>
 

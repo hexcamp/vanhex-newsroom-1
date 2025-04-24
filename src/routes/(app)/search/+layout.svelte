@@ -20,7 +20,7 @@
 </script>
 
 <svelte:head>
-	<link rel="canonical" href="https://bsky.app/search?q={query}" />
+	<link rel="canonical" href="{base}/search?q={query}" />
 </svelte:head>
 
 <PageContainer>

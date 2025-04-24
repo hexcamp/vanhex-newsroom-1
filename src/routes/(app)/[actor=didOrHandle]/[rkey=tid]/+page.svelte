@@ -40,7 +40,7 @@
 
 <svelte:head>
 	<title>{title}</title>
-	<link rel="canonical" href="https://bsky.app/profile/{uri.repo}/post/{uri.rkey}" />
+	<link rel="canonical" href="{base}/{uri.repo}/{uri.rkey}" />
 	<link rel="alternate" href={main.uri} />
 </svelte:head>
 

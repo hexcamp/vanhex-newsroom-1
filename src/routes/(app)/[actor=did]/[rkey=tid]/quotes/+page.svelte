@@ -1,14 +1,18 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import { PUBLIC_APP_NAME } from '$env/static/public';
 	import type { PageProps } from './$types';
 
 	import { paginate } from '$lib/utils/pagination';
 
+	import OverflowMenu from '$lib/components/overflow-menu.svelte';
 	import PageContainer from '$lib/components/page/page-container.svelte';
 	import PageHeader from '$lib/components/page/page-header.svelte';
 	import PageListing from '$lib/components/page/page-listing.svelte';
 	import PostFeedItem from '$lib/components/timeline/post-feed-item.svelte';
+
+	import ThreadOutlined from '$lib/components/central-icons/thread-outlined.svelte';
 
 	const { data }: PageProps = $props();
 
@@ -20,7 +24,17 @@
 </svelte:head>
 
 <PageContainer>
-	<PageHeader title="Quotes" />
+	<PageHeader title="Quotes">
+		<OverflowMenu
+			items={[
+				{
+					label: `Show all quotes`,
+					href: `${base}/${page.params.actor}/${page.params.rkey}/all-quotes`,
+					icon: ThreadOutlined,
+				},
+			]}
+		/>
+	</PageHeader>
 
 	<PageListing subject="posts" {rootUrl} {nextUrl}>
 		{#each data.quotes.items as post (post.uri)}

@@ -63,3 +63,78 @@ export const getLinks = async <K extends keyof Records>({
 
 	return json as LinkResponse<K>;
 };
+
+// due to the way Bluesky has designed its embeds, quotes can be in two
+// different paths, `.embed.record.uri` and `.embed.record.record.uri`.
+// Since Constellation can only support one path at a time, here's a function
+// that will make this happen really nicely
+const MP_CURSOR_RE = /^mp:(\d+)(?::(.+))?$/;
+
+export const getLinksMultiPath = async <K extends keyof Records>({
+	uri,
+	collection,
+	paths,
+	limit = 10,
+	cursor = null,
+}: {
+	uri: string;
+	collection: K;
+	paths: [string, string, ...string[]];
+	limit?: number;
+	cursor?: string | null;
+}): Promise<LinkResponse<K>> => {
+	let index = 0;
+	let curs: string | null = null;
+
+	const result: LinkResponse<K> = {
+		// this will never be anything other than 0 unfortunately,
+		// can't make it work across different paths
+		total: 0,
+		cursor: null,
+		linking_records: [],
+	};
+
+	if (cursor !== null) {
+		const match = MP_CURSOR_RE.exec(cursor);
+		if (match === null) {
+			return result;
+		}
+
+		index = parseInt(match[1], 10);
+		curs = match[2] ?? null;
+
+		if (index >= paths.length) {
+			return result;
+		}
+	}
+
+	while (index < paths.length) {
+		const data = await getLinks({
+			uri: uri,
+			collection: collection,
+			path: paths[index],
+			limit: limit - result.linking_records.length,
+			cursor: curs,
+		});
+
+		result.linking_records = [...result.linking_records, ...data.linking_records];
+
+		// response returned a cursor, so we're breaking early
+		if (data.cursor !== null) {
+			result.cursor = `mp:${index}:${data.cursor}`;
+			break;
+		}
+
+		// we've reached the limit
+		if (result.linking_records.length >= limit) {
+			break;
+		}
+
+		// move to the next path
+		index++;
+		curs = null;
+		result.cursor = index < paths.length ? `mp:${index}` : null;
+	}
+
+	return result;
+};

@@ -4,7 +4,7 @@ import type { Records } from '@atcute/client/lexicons';
 
 import * as v from '@badrap/valita';
 
-import { PUBLIC_CONSTELLATION_URL } from '$env/static/public';
+import { PUBLIC_APP_USER_AGENT, PUBLIC_CONSTELLATION_URL } from '$env/static/public';
 
 import type { Did } from '$lib/types/identity';
 import { didString, integer, nsidString, recordKeyString } from '$lib/types/valita';
@@ -52,7 +52,11 @@ export const getLinks = async <K extends keyof Records>({
 		`&limit=${limit}` +
 		(cursor ? `&cursor=${cursor}` : '');
 
-	const response = await fetch(requestUrl);
+	const response = await fetch(requestUrl, {
+		headers: {
+			'user-agent': PUBLIC_APP_USER_AGENT,
+		},
+	});
 	if (!response.ok) {
 		// @todo: replace this with a non-SvelteKit error
 		error(503, `Constellation API returned ${response.status}`);

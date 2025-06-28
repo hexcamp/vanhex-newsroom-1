@@ -14,16 +14,16 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-cloudflare": "^7.0.4",
-		"@sveltejs/kit": "^2.22.0",
+		"@sveltejs/kit": "^2.22.2",
 		"@sveltejs/vite-plugin-svelte": "^5.1.0",
-		"prettier": "^3.6.0",
+		"prettier": "^3.6.2",
 		"prettier-plugin-css-order": "^2.1.2",
 		"prettier-plugin-svelte": "^3.4.0",
-		"svelte": "^5.34.7",
+		"svelte": "^5.34.8",
 		"svelte-check": "^4.2.2",
 		"typescript": "~5.8.3",
 		"vite": "^6.3.5",
-		"wrangler": "^4.20.5"
+		"wrangler": "^4.22.0"
 	},
 	"dependencies": {
 		"@atcute/bluesky": "^2.1.1",

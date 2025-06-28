@@ -20,9 +20,9 @@ export const GET: RequestHandler = async ({ url }) => {
 	const query = q.trim();
 
 	// redirect to user search if query starts with '@' and is a valid handle
-	if (query.startsWith('@') && isHandle(query.slice(1))) {
-		redirect(302, `${base}/search/users?q=${encodeURIComponent(query)}`);
-	}
+	// if (query.startsWith('@') && isHandle(query.slice(1))) {
+	// 	redirect(302, `${base}/search/users?q=${encodeURIComponent(query)}`);
+	// }
 
 	// redirect if it's a known bsky.app link
 	{
@@ -33,7 +33,9 @@ export const GET: RequestHandler = async ({ url }) => {
 		}
 	}
 
-	redirect(302, `${base}/search/posts?q=${encodeURIComponent(query)}`);
+	// redirect(302, `${base}/search/posts?q=${encodeURIComponent(query)}`);
+
+	redirect(302, `${base}/search/users?q=${encodeURIComponent(query)}`);
 };
 
 const findLinkRedirect = (raw: string): string | null | undefined => {

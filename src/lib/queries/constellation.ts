@@ -2,6 +2,8 @@ import { error } from '@sveltejs/kit';
 
 import type { Did } from '@atcute/lexicons';
 import type { Records } from '@atcute/lexicons/ambient';
+import { fromBase64Url, toBase64Url } from '@atcute/multibase';
+import { decodeUtf8From, encodeUtf8 } from '@atcute/uint8array';
 
 import * as v from '@badrap/valita';
 
@@ -68,12 +70,26 @@ export const getLinks = async <K extends keyof Records>({
 	return json as LinkResponse<K>;
 };
 
+const multiPathCursor = v.tuple([v.string(), v.string().nullable()]);
+
+/**
+ * generate multi path cursor
+ * @param path current path
+ * @param subcursor sub cursor
+ * @returns compressed cursor
+ */
+const generateMultiPathCursor = (path: string, subcursor: string | null): string => {
+	const mp: v.Infer<typeof multiPathCursor> = [path, subcursor];
+	const json = JSON.stringify(mp);
+
+	return toBase64Url(encodeUtf8(json));
+};
+
 // due to the way Bluesky has designed its embeds, quotes can be in two
 // different paths, `.embed.record.uri` and `.embed.record.record.uri`.
-// Since Constellation can only support one path at a time, here's a function
+//
+// since Constellation can only support one path at a time, here's a function
 // that will make this happen really nicely
-const MP_CURSOR_RE = /^mp:(\d+)(?::(.+))?$/;
-
 export const getLinksMultiPath = async <K extends keyof Records>({
 	uri,
 	collection,
@@ -99,15 +115,21 @@ export const getLinksMultiPath = async <K extends keyof Records>({
 	};
 
 	if (cursor !== null) {
-		const match = MP_CURSOR_RE.exec(cursor);
-		if (match === null) {
-			return result;
-		}
+		try {
+			const raw = decodeUtf8From(fromBase64Url(cursor));
+			const json = JSON.parse(raw);
 
-		index = parseInt(match[1], 10);
-		curs = match[2] ?? null;
+			const [currentPath, subCursor] = multiPathCursor.parse(json);
+			const foundIndex = paths.indexOf(currentPath);
 
-		if (index >= paths.length) {
+			if (foundIndex === -1) {
+				return result;
+			}
+
+			index = foundIndex;
+			curs = subCursor;
+		} catch (e) {
+			// If decompression or parsing fails, treat as invalid cursor
 			return result;
 		}
 	}
@@ -125,7 +147,7 @@ export const getLinksMultiPath = async <K extends keyof Records>({
 
 		// response returned a cursor, so we're breaking early
 		if (data.cursor !== null) {
-			result.cursor = `mp:${index}:${data.cursor}`;
+			result.cursor = generateMultiPathCursor(paths[index], data.cursor);
 			break;
 		}
 
@@ -137,7 +159,7 @@ export const getLinksMultiPath = async <K extends keyof Records>({
 		// move to the next path
 		index++;
 		curs = null;
-		result.cursor = index < paths.length ? `mp:${index}` : null;
+		result.cursor = index < paths.length ? generateMultiPathCursor(paths[index], null) : null;
 	}
 
 	return result;

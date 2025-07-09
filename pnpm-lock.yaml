@@ -26,6 +26,12 @@ importers:
       '@atcute/lexicons':
         specifier: ^1.1.0
         version: 1.1.0
+      '@atcute/multibase':
+        specifier: ^1.1.4
+        version: 1.1.4
+      '@atcute/uint8array':
+        specifier: ^1.0.3
+        version: 1.0.3
       '@badrap/valita':
         specifier: ^0.4.5
         version: 0.4.5
@@ -102,6 +108,12 @@ packages:
 
   '@atcute/lexicons@1.1.0':
     resolution: {integrity: sha512-LFqwnria78xLYb62Ri/+WwQpUTgZp2DuyolNGIIOV1dpiKhFFFh//nscHMA6IExFLQRqWDs3tTjy7zv0h3sf1Q==}
+
+  '@atcute/multibase@1.1.4':
+    resolution: {integrity: sha512-NUf5AeeSOmuZHGU+4GAaMtISJoG+ZHtW/vUVA4lK/YDt/7LODAW0Fd0NNIIUPVUoW0xJS6zSEIWvwLLuxmEHhA==}
+
+  '@atcute/uint8array@1.0.3':
+    resolution: {integrity: sha512-M/K+ihiVW8Pl2PFLzaC4E3l4JaZ1IH05Q0AbPWUC4cVHnd/gZ/1kAF5ngdtGvJeDMirHZ2VAy7OmAsPwR/2nlA==}
 
   '@badrap/valita@0.4.5':
     resolution: {integrity: sha512-4QwGbuhh/JesHRQj79mO/l37PvJj4l/tlAu7+S1n4h47qwaNpZ0WDvIwUGLYUsdi9uQ5UPpiG9wb1Wm3XUFBUQ==}
@@ -1186,6 +1198,12 @@ snapshots:
   '@atcute/lexicons@1.1.0':
     dependencies:
       esm-env: 1.2.2
+
+  '@atcute/multibase@1.1.4':
+    dependencies:
+      '@atcute/uint8array': 1.0.3
+
+  '@atcute/uint8array@1.0.3': {}
 
   '@badrap/valita@0.4.5': {}
 

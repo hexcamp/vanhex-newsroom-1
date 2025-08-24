@@ -25,7 +25,7 @@
 				name="query"
 				required
 				autofocus={!form || form.place === 'search'}
-				placeholder="Search for users or feeds"
+				placeholder="Search for keywords, @usernames, #tags"
 				class="input"
 				aria-invalid={form?.place === 'search'}
 				aria-errormessage={form?.place === 'search' ? 'search-error' : undefined}

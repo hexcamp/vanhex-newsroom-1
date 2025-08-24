@@ -18,13 +18,11 @@ export const actions = {
 
 		query = query.trim();
 
-		// if (MAYBE_HANDLE_RE.test(query)) {
-		// 	redirect(302, `${base}/search/users?q=${encodeURIComponent(query)}`);
-		// }
+		if (MAYBE_HANDLE_RE.test(query)) {
+			redirect(302, `${base}/search/users?q=${encodeURIComponent(query)}`);
+		}
 
-		// redirect(302, `${base}/search/posts?q=${encodeURIComponent(query)}`);
-
-		redirect(302, `${base}/search/users?q=${encodeURIComponent(query)}`);
+		redirect(302, `${base}/search/posts?q=${encodeURIComponent(query)}`);
 	},
 	async redirect({ request }) {
 		const formData = await request.formData();

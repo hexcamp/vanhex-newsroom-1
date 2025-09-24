@@ -5,15 +5,15 @@ import type { Records } from '@atcute/lexicons/ambient';
 import { fromBase64Url, toBase64Url } from '@atcute/multibase';
 import { decodeUtf8From, encodeUtf8 } from '@atcute/uint8array';
 
-import * as v from '@badrap/valita';
+import * as v from 'valibot';
 
 import { PUBLIC_APP_USER_AGENT, PUBLIC_CONSTELLATION_URL } from '$env/static/public';
 
-import { didString, integer, nsidString, recordKeyString } from '$lib/types/valita';
+import { didString, integer, nsidString, recordKeyString } from '$lib/types/valibot';
 
 const linkResponse = v.object({
 	total: integer,
-	cursor: v.string().nullable(),
+	cursor: v.nullable(v.string()),
 	linking_records: v.array(
 		v.object({
 			did: didString,
@@ -65,12 +65,12 @@ export const getLinks = async <K extends keyof Records>({
 	}
 
 	const rawJson = await response.json();
-	const json = linkResponse.parse(rawJson, { mode: 'passthrough' });
+	const json = v.parse(linkResponse, rawJson);
 
 	return json as LinkResponse<K>;
 };
 
-const multiPathCursor = v.tuple([v.string(), v.string().nullable()]);
+const multiPathCursor = v.tuple([v.string(), v.nullable(v.string())]);
 
 /**
  * generate multi path cursor
@@ -79,7 +79,7 @@ const multiPathCursor = v.tuple([v.string(), v.string().nullable()]);
  * @returns compressed cursor
  */
 const generateMultiPathCursor = (path: string, subcursor: string | null): string => {
-	const mp: v.Infer<typeof multiPathCursor> = [path, subcursor];
+	const mp: v.InferOutput<typeof multiPathCursor> = [path, subcursor];
 	const json = JSON.stringify(mp);
 
 	return toBase64Url(encodeUtf8(json));
@@ -119,7 +119,7 @@ export const getLinksMultiPath = async <K extends keyof Records>({
 			const raw = decodeUtf8From(fromBase64Url(cursor));
 			const json = JSON.parse(raw);
 
-			const [currentPath, subCursor] = multiPathCursor.parse(json);
+			const [currentPath, subCursor] = v.parse(multiPathCursor, json);
 			const foundIndex = paths.indexOf(currentPath);
 
 			if (foundIndex === -1) {

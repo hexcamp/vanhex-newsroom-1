@@ -32,9 +32,6 @@ importers:
       '@atcute/uint8array':
         specifier: ^1.0.4
         version: 1.0.4
-      '@badrap/valita':
-        specifier: ^0.4.6
-        version: 0.4.6
       '@mary/array-fns':
         specifier: jsr:^0.1.5
         version: '@jsr/mary__array-fns@0.1.5'
@@ -44,6 +41,9 @@ importers:
       hls.js:
         specifier: ^1.6.13
         version: 1.6.13
+      valibot:
+        specifier: ^1.1.0
+        version: 1.1.0(typescript@5.8.3)
     devDependencies:
       '@sveltejs/adapter-cloudflare':
         specifier: ^7.2.3
@@ -1088,6 +1088,14 @@ packages:
   unenv@2.0.0-rc.21:
     resolution: {integrity: sha512-Wj7/AMtE9MRnAXa6Su3Lk0LNCfqDYgfwVjwRFVum9U7wsto1imuHqk4kTm7Jni+5A0Hn7dttL6O/zjvUvoo+8A==}
 
+  valibot@1.1.0:
+    resolution: {integrity: sha512-Nk8lX30Qhu+9txPYTwM0cFlWLdPFsFr6LblzqIySfbZph9+BFsAHsNvHOymEviUepeIW6KFHzpX8TKhbptBXXw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   vite@7.1.7:
     resolution: {integrity: sha512-VbA8ScMvAISJNJVbRDTJdCwqQoAareR/wutevKanhR2/1EkoXVZVkkORaYm/tNVCjP/UDTKtcw3bAkwOUdedmA==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -2002,6 +2010,10 @@ snapshots:
       ohash: 2.0.11
       pathe: 2.0.3
       ufo: 1.6.1
+
+  valibot@1.1.0(typescript@5.8.3):
+    optionalDependencies:
+      typescript: 5.8.3
 
   vite@7.1.7:
     dependencies:

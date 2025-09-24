@@ -1,6 +1,6 @@
 import { error, redirect } from '@sveltejs/kit';
 
-import * as v from '@badrap/valita';
+import * as v from 'valibot';
 
 import { PUBLIC_GO_BSKY_URL } from '$env/static/public';
 import type { PageLoad } from './$types';
@@ -28,14 +28,14 @@ export const load: PageLoad = async ({ params }) => {
 
 	const raw = await response.json();
 
-	const result = jsonSchema.try(raw);
-	if (!result.ok) {
+	const result = v.safeParse(jsonSchema, raw);
+	if (!result.success) {
 		error(500, `Invalid response from upstream server`);
 	}
 
-	const url = safeUrlParse(result.value.url);
+	const url = safeUrlParse(result.output.url);
 	if (!url) {
-		error(500, `Invalid URL from upstream server; got ${result.value.url}`);
+		error(500, `Invalid URL from upstream server; got ${result.output.url}`);
 	}
 
 	const redir = redirectBskyUrl(url);

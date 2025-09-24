@@ -4,6 +4,8 @@ import { asString, asStringUnion, useSearchParams } from '$lib/utils/search-para
 
 import { PUBLIC_APPVIEW_URL } from '$env/static/public';
 import type { PageLoad } from './$types';
+import { mapDefined, unique } from '@mary/array-fns';
+import type { AppBskyFeedDefs, AppBskyFeedPost } from '@atcute/bluesky';
 
 export const load: PageLoad = async ({ url }) => {
 	const [{ q, sort, cursor }] = useSearchParams(url, {
@@ -37,6 +39,16 @@ export const load: PageLoad = async ({ url }) => {
 	}
 
 	const data = response.data;
+
+	const replyUris = unique(
+		mapDefined(data.posts, (post) => {
+			const record = post.record as AppBskyFeedPost.Main;
+			const reply = record.reply;
+			if (reply) {
+				return [reply.root.uri, reply.parent.uri];
+			}
+		}).flat(),
+	);
 
 	return { query, posts: { cursor: data.cursor, items: data.posts } };
 };

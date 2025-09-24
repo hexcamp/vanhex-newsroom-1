@@ -45,7 +45,7 @@ export const redirectBskyUrl = (url: URL): RedirectResult => {
 
 			return {
 				type: 'internal',
-				url: resolve('/(app)/(profile)/[actor=didOrHandle]/(timeline)', { actor: match[1] }),
+				url: resolve('/(app)/[actor=didOrHandle]/(profile)/(timeline)', { actor: match[1] }),
 			};
 		}
 
@@ -248,7 +248,7 @@ export const redirectAtUri = (raw: string): RedirectResult => {
 			case 'app.bsky.actor.profile': {
 				return {
 					type: 'internal',
-					url: resolve('/(app)/(profile)/[actor=didOrHandle]/(timeline)', { actor: uri.repo }),
+					url: resolve('/(app)/[actor=didOrHandle]/(profile)/(timeline)', { actor: uri.repo }),
 				};
 			}
 			case 'app.bsky.feed.post': {
@@ -285,7 +285,7 @@ export const redirectAtUri = (raw: string): RedirectResult => {
 	if (uri.collection === undefined) {
 		return {
 			type: 'internal',
-			url: resolve('/(app)/(profile)/[actor=didOrHandle]/(timeline)', { actor: uri.repo }),
+			url: resolve('/(app)/[actor=didOrHandle]/(profile)/(timeline)', { actor: uri.repo }),
 		};
 	}
 

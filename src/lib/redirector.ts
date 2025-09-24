@@ -33,7 +33,8 @@ export const redirectBskyUrl = (url: URL): RedirectResult => {
 		host === 'bsky.app' ||
 		host === 'staging.bsky.app' ||
 		host === 'main.bsky.dev' ||
-		host === 'deer.social'
+		host === 'deer.social' ||
+		host === 'zeppelin.social'
 	) {
 		if ((match = BSKY_PROFILE_LINK_RE.exec(pathname))) {
 			const [, actor] = match;

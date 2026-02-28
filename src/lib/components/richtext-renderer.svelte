@@ -1,7 +1,11 @@
 <script lang="ts" module>
-	import { segmentize, type Facet, type FacetFeature } from '@atcute/bluesky-richtext-segmenter';
+	import type { AppBskyRichtextFacet } from '@atcute/bluesky';
+	import { segmentize } from '@atcute/bluesky-richtext-segmenter';
 
-	const grabFirstSupported = (features: FacetFeature[] | undefined): FacetFeature | undefined => {
+	type Feature = AppBskyRichtextFacet.Main['features'][number];
+	type SupportedFeature = AppBskyRichtextFacet.Link | AppBskyRichtextFacet.Mention | AppBskyRichtextFacet.Tag;
+
+	const grabFirstSupported = (features: Feature[] | undefined): SupportedFeature | undefined => {
 		return features?.find(
 			(feature) =>
 				feature.$type === 'app.bsky.richtext.facet#link' ||
@@ -19,7 +23,7 @@
 
 	interface Props {
 		text: string;
-		facets?: Facet[];
+		facets?: AppBskyRichtextFacet.Main[];
 		large?: boolean;
 	}
 

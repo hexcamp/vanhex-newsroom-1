@@ -15,11 +15,11 @@ importers:
         specifier: ^3.2.19
         version: 3.2.19
       '@atcute/bluesky-richtext-parser':
-        specifier: ^1.0.7
-        version: 1.0.7
+        specifier: ^2.1.1
+        version: 2.1.1
       '@atcute/bluesky-richtext-segmenter':
-        specifier: ^2.0.4
-        version: 2.0.4
+        specifier: ^3.0.0
+        version: 3.0.0
       '@atcute/client':
         specifier: ^4.2.1
         version: 4.2.1
@@ -87,11 +87,11 @@ packages:
   '@atcute/atproto@3.1.10':
     resolution: {integrity: sha512-+GKZpOc0PJcdWMQEkTfg/rSNDAAHxmAUGBl60g2az15etqJn5WaUPNGFE2sB7hKpwi5Ue2h/L0OacINcE/JDDQ==}
 
-  '@atcute/bluesky-richtext-parser@1.0.7':
-    resolution: {integrity: sha512-nOvU699OXiGMbyswao7JJnY0C9WkwE7PVC/m5WWt0UN9fsXSOor9IZWw+v9SATp+94BTJoG38XyUomUaJnoQRA==}
+  '@atcute/bluesky-richtext-parser@2.1.1':
+    resolution: {integrity: sha512-2CJiZ1oLAxQEz6BL5r1m/p+m89bb02959dFEvMvYI7CbHgIzbZsDOp3JB2XVu49DjPNtd9Mz5VnF5OBBpTgWdg==}
 
-  '@atcute/bluesky-richtext-segmenter@2.0.4':
-    resolution: {integrity: sha512-6m5QEAv4lU3qTy5MeJXJRRG33acipYJnMW1T7W/KrMyThGhQ7jSTTh8Z48quElgivgX7MDj6o/ow1oLUsjsCKw==}
+  '@atcute/bluesky-richtext-segmenter@3.0.0':
+    resolution: {integrity: sha512-NhZTUKtFpeBBbILwAcxj5u4RobIoHOmGw3CAaaEFNebKYSvmTecrXJ7XufHw5DFOUdr8SiKXQVRQxGAxulMNWg==}
 
   '@atcute/bluesky@3.2.19':
     resolution: {integrity: sha512-W/Sy2671A5eKkdWJn6nfCGoixqMFOouEKRbqRV3630I13Er9iS+gA/rGWUXlp5xNpbfCNmsQ6C1pEidUmO+00g==}
@@ -1057,12 +1057,9 @@ snapshots:
     dependencies:
       '@atcute/lexicons': 1.2.9
 
-  '@atcute/bluesky-richtext-parser@1.0.7': {}
+  '@atcute/bluesky-richtext-parser@2.1.1': {}
 
-  '@atcute/bluesky-richtext-segmenter@2.0.4':
-    dependencies:
-      '@atcute/bluesky': 3.2.19
-      '@atcute/lexicons': 1.2.9
+  '@atcute/bluesky-richtext-segmenter@3.0.0': {}
 
   '@atcute/bluesky@3.2.19':
     dependencies:

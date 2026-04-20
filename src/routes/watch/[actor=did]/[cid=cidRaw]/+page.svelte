@@ -22,6 +22,7 @@
 
 		if (canPlayNative) {
 			el.src = data.playlistUrl;
+			el.play().catch(() => {});
 			teardown = () => {
 				el.removeAttribute('src');
 				el.load();
@@ -35,6 +36,9 @@
 					return;
 				}
 				destroy = setupHls(Hls, el, data.playlistUrl);
+				// the `autoplay` attribute was latent while we waited for hls.js;
+				// kick playback manually now that a source is attached
+				el.play().catch(() => {});
 			});
 
 			teardown = () => {

@@ -112,8 +112,9 @@
 					<Embeds {post} embed={post.embed} />
 				{/if}
 			</ContentHider>
-
-			<PostMetrics {post} />
+			{#if false}
+				<PostMetrics {post} />
+			{/if}
 		</div>
 	</div>
 </div>

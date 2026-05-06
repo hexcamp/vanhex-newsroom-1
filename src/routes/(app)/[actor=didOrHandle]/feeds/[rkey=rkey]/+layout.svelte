@@ -8,9 +8,11 @@
 
 {#key data.feed.uri}
 	<div class="custom-feed-layout">
-		<div class="aside">
-			<FeedAside feed={data.feed} />
-		</div>
+		{#if false}
+			<div class="aside">
+				<FeedAside feed={data.feed} />
+			</div>
+		{/if}
 
 		<div class="main">
 			{@render children()}
@@ -22,15 +24,18 @@
 	.custom-feed-layout {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
-		grid-template-areas: 'aside' 'main';
+		/* grid-template-areas: 'aside' 'main'; */
+		grid-template-areas: 'main';
 		justify-content: center;
 		gap: 8px;
 		margin: 24px auto 0;
 		max-width: 480px;
 
 		@media (width >= 640px) {
-			grid-template-columns: minmax(255px, 320px) minmax(0, 600px);
-			grid-template-areas: 'aside main';
+			/* grid-template-columns: minmax(255px, 320px) minmax(0, 600px); */
+			/* grid-template-areas: 'aside main'; */
+			grid-template-columns: minmax(0, 600px);
+			grid-template-areas: 'main';
 			max-width: 960px;
 		}
 	}

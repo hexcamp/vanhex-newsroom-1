@@ -1,5 +1,11 @@
-# Anartia
+# vanhex-newsroom-1
 
-JavaScript-optional public web frontend for Bluesky.
+A experimental HTML interface for the [Vancouver BC News Feed](https://6kg6rsaaaaaa.vanhex.ca/news/).
 
-![Web client displaying @bsky.app's Bluesky profile](https://github.com/user-attachments/assets/710a213b-025b-4b52-9a89-251cc1a53c75)
+Based on [Anartia](https://anartia.kelinci.net/), a JavaScript-optional public web frontend for Bluesky.
+
+* https://anartia.kelinci.net/
+
+# License
+
+BSD 3-Clause License

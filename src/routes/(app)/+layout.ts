@@ -10,17 +10,22 @@ import { makeAtUri } from '$lib/types/at-uri';
 export const load: LayoutLoad = async ({ params, fetch }) => {
 	const client = new Client({ handler: simpleFetchHandler({ service: PUBLIC_APPVIEW_URL }) });
 
+	// const actor = params.actor;
+	// const rkey = params.rkey;
+	const actor = 'did:plc:jaa4ygmm55ban3yhsibc3n4m';
+	const rkey = 'van-bc-news';
+
 	let did: Did;
-	if (isDid(params.actor)) {
-		did = params.actor;
+	if (isDid(actor)) {
+		did = actor;
 	} else {
-		did = await resolveHandle({ client: client, handle: params.actor });
+		did = await resolveHandle({ client: client, handle: actor });
 	}
 
 	const data = await ok(
 		client.get('app.bsky.feed.getFeedGenerator', {
 			params: {
-				feed: makeAtUri(did, 'app.bsky.feed.generator', params.rkey),
+				feed: makeAtUri(did, 'app.bsky.feed.generator', rkey),
 			},
 		}),
 	);

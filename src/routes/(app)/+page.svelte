@@ -1,177 +1,36 @@
 <script lang="ts">
 	import { base } from '$app/paths';
+	import { page } from '$app/state';
 	import { PUBLIC_APP_NAME } from '$env/static/public';
 	import type { PageProps } from './$types';
 
-	import ArrowRightOutlined from '$lib/components/central-icons/arrow-right-outlined.svelte';
-	import HashtagOutlined from '$lib/components/central-icons/hashtag-outlined.svelte';
-	import MagnifyingGlassOutlined from '$lib/components/central-icons/magnifying-glass-outlined.svelte';
-	import Trending_2Outlined from '$lib/components/central-icons/trending-2-outlined.svelte';
+	import { assertCanonicalResourceUri } from '$lib/types/at-uri';
+	import { paginate } from '$lib/utils/pagination';
 
-	const { form }: PageProps = $props();
+	import PageListing from '$lib/components/page/page-listing.svelte';
+	import PostFeedItem from '$lib/components/timeline/post-feed-item.svelte';
+
+	import FeedMetaTags from './components/feed-meta-tags.svelte';
+
+	const { data }: PageProps = $props();
+
+	const rkey = $derived(assertCanonicalResourceUri(data.feed.uri).rkey);
+
+	const { rootUrl, nextUrl } = $derived(
+		paginate(page.url, data.timeline.cursor, `${base}/${data.feed.creator.did}/feeds/${rkey}`),
+	);
 </script>
 
 <svelte:head>
-	<title>{PUBLIC_APP_NAME}</title>
-	<meta name="description" content="JavaScript-optional public web frontend for Bluesky." />
+	<title>{data.feed.displayName} by @{data.feed.creator.handle} — {PUBLIC_APP_NAME}</title>
+	<link rel="canonical" href="{base}/{data.feed.creator.did}/feeds/{rkey}" />
+	<link rel="alternate" href={data.feed.uri} />
 </svelte:head>
 
-<div class="wrapper">
-	<div class="container">
-		<form method="post" action="?/search" class="search-box">
-			<!-- svelte-ignore a11y_autofocus -->
-			<input
-				type="search"
-				name="query"
-				required
-				autofocus={!form || form.place === 'search'}
-				placeholder="Search for keywords, @usernames, #tags"
-				class="input"
-				aria-invalid={form?.place === 'search'}
-				aria-errormessage={form?.place === 'search' ? 'search-error' : undefined}
-			/>
+<FeedMetaTags feed={data.feed} />
 
-			<button tabindex={-1} aria-label="Search" type="submit" class="button">
-				<MagnifyingGlassOutlined />
-			</button>
-		</form>
-
-		{#if form?.place === 'search'}
-			<p id="search-error" class="error-text">{form.error}</p>
-		{/if}
-	</div>
-
-	<div class="container">
-		<form method="post" action="?/redirect" class="search-box">
-			<!-- svelte-ignore a11y_autofocus -->
-			<input
-				name="query"
-				required
-				autofocus={form?.place === 'redirect'}
-				placeholder="Enter bsky.app URL or AT-URI"
-				class="input"
-				aria-invalid={form?.place === 'redirect'}
-				aria-errormessage={form?.place === 'redirect' ? 'redirect-error' : undefined}
-			/>
-
-			<button tabindex={-1} aria-label="Go" type="submit" class="button">
-				<ArrowRightOutlined />
-			</button>
-		</form>
-
-		{#if form?.place === 'redirect'}
-			<p id="redirect-error" class="error-text">{form.error}</p>
-		{/if}
-	</div>
-
-	<div class="links">
-		<a href="{base}/trending" class="link">
-			<Trending_2Outlined />
-			<span>Trending</span>
-		</a>
-
-		<a href="{base}/search/feeds?q=" class="link">
-			<HashtagOutlined />
-			<span>Feeds</span>
-		</a>
-	</div>
-</div>
-
-<style>
-	.wrapper {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 24px;
-		min-height: 100svh;
-	}
-
-	.container {
-		margin: 0 auto;
-		background: var(--bg-primary);
-		padding: 16px;
-		width: 100%;
-		max-width: 600px;
-	}
-
-	.search-box {
-		display: flex;
-		position: relative;
-	}
-	.input {
-		flex-grow: 1;
-		appearance: none;
-		border: 1px solid var(--divider-md);
-		background: transparent;
-		padding: 10px 36px 10px 12px;
-		color: inherit;
-
-		&::placeholder {
-			color: var(--text-blurb);
-			font-style: italic;
-		}
-
-		&:focus {
-			outline-offset: -1px;
-		}
-	}
-	.button {
-		display: grid;
-		position: absolute;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		flex-shrink: 0;
-		place-items: center;
-		appearance: none;
-		cursor: pointer;
-		margin: 1px;
-		border: 0;
-		background: transparent;
-		aspect-ratio: 1 / 1;
-		color: color-mix(in srgb, var(--text-primary), transparent 10%);
-		font-size: 1.125rem;
-
-		&:hover {
-			background: var(--tap-sm-pressed);
-		}
-	}
-
-	.error-text {
-		display: block;
-		margin: 8px 0 0 0;
-		color: #dc2626;
-		font-size: 0.8125rem;
-
-		@media (prefers-color-scheme: dark) {
-			color: #f87171;
-		}
-	}
-
-	.links {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-items: center;
-		gap: 12px;
-		padding: 0 16px;
-	}
-
-	.link {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		padding: 8px 12px;
-		color: color-mix(in srgb, var(--text-primary), transparent 10%);
-
-		:global(.sv-icon) {
-			font-size: 16px;
-		}
-
-		&:hover {
-			background: var(--tap-sm-pressed);
-			color: var(--text-primary);
-		}
-	}
-</style>
+<PageListing subject="timeline" {rootUrl} {nextUrl}>
+	{#each data.timeline.items as item (item.id)}
+		<PostFeedItem {item} />
+	{/each}
+</PageListing>

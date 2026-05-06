@@ -39,7 +39,7 @@
 	});
 </script>
 
-{#if dev}
+{#if true}
 	<time title={formatted.alt} datetime={date.toISOString()} data-format={format}>
 		{formatted.label}
 	</time>

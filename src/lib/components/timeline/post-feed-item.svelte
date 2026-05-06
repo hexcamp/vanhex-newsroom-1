@@ -81,7 +81,9 @@
 		</div>
 
 		<div class="main">
-			<PostMeta {post} {postUrl} {authorUrl} gutterBottom />
+			{#if true}
+				<PostMeta {post} {postUrl} {authorUrl} gutterBottom />
+			{/if}
 
 			{#if !item.prev && record.reply}
 				{@const parent = item.reply?.parent}

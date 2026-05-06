@@ -33,9 +33,11 @@
 
 	<span aria-hidden="true" class="dot"> · </span>
 
-	<a href={postUrl} class="date">
-		<Time date={createdAt} format="relative-time" />
-	</a>
+	{#if true}
+		<a href={postUrl} class="date">
+			<Time date={createdAt} format="relative-time" />
+		</a>
+	{/if}
 </div>
 
 <style>

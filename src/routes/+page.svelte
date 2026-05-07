@@ -15,6 +15,7 @@
 	const { data }: PageProps = $props();
 
 	let dedupe = $state(true);
+	let separateTab = $state(true);
 
 	const rkey = $derived(assertCanonicalResourceUri(data.feed.uri).rkey);
 
@@ -41,12 +42,14 @@
 		})(),
 	});
 
+	/*
 	(() => {
 		console.log('Jim Original Timeline', data.timeline);
 		for (const i in filteredTimeline.items) {
 			console.log('Jim Item', i, filteredTimeline.items[i].post.record);
 		}
 	})();
+	*/
 
 	const { rootUrl, nextUrl } = $derived(paginate(page.url, filteredTimeline.cursor, base));
 </script>
@@ -62,6 +65,11 @@
 		<input type="checkbox" bind:checked={dedupe} />
 		De-duplicate articles
 	</label>
+	<label>
+		<input type="checkbox" bind:checked={separateTab} />
+		Open in Separate Tab
+	</label>
+	<a href="https://bsky.social" target="publisherFrame">Test Link</a>
 </div>
 <FeedMetaTags feed={data.feed} />
 

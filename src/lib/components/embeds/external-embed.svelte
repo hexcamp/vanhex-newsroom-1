@@ -22,9 +22,10 @@
 </script>
 
 <a
-	target={!redir || redir.type === 'external' ? '_blank' : undefined}
+	// target={!redir || redir.type === 'external' ? '_blank' : undefined}
+	target={!redir || redir.type === 'external' ? 'publisherFrame' : undefined}
 	href={redir ? redir.url : domain ? external.uri : ''}
-	rel="noopener noreferrer nofollow"
+	// rel="noopener noreferrer nofollow"
 	class="external-embed"
 >
 	{#if external.thumb}

@@ -92,7 +92,7 @@
 	{@const alt = trimRichText(image.alt)}
 
 	{#if standalone}
-		<a href={image.fullsize.replace('@jpeg', '@png')} target="_blank" rel="noopener" class="image-wrapper">
+		<a href={image.fullsize.replace('@jpeg', '@png')} target="publisherFrame" class="image-wrapper">
 			<img loading="lazy" src={image.thumb} {alt} class={`image` + (blur ? ` is-blurred` : ``)} />
 		</a>
 	{:else}

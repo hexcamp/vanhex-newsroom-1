@@ -22,6 +22,10 @@
 			</div>
 			{@render children()}
 		</div>
+		<div class="publisherFrame">
+			<h1>Publisher</h1>
+			<iframe name="publisherFrame" src="about:blank" title="publisher"></iframe>
+		</div>
 	</div>
 {/key}
 
@@ -30,17 +34,25 @@
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		/* grid-template-areas: 'aside' 'main'; */
-		grid-template-areas: 'main';
+		grid-template-areas: 'main' 'publisher';
 		justify-content: center;
 		gap: 8px;
 		margin: 24px auto 0;
-		max-width: 480px;
+		max-width: 1200px;
 
 		@media (width >= 640px) {
 			/* grid-template-columns: minmax(255px, 320px) minmax(0, 600px); */
 			/* grid-template-areas: 'aside main'; */
+
+			/*
 			grid-template-columns: minmax(0, 600px);
 			grid-template-areas: 'main';
+			*/
+
+			/* grid-template-columns: minmax(0, 600px); */
+			grid-template-columns: minmax(255px, 320px) minmax(0, 1200px);
+			grid-template-areas: 'main publisher';
+
 			max-width: 960px;
 		}
 	}
@@ -70,5 +82,14 @@
 
 	.header h1 {
 		margin-bottom: 0.5rem;
+	}
+
+	.publisherFrame {
+		grid-area: publisher;
+	}
+
+	.publisherFrame iframe {
+		width: 100%;
+		height: 100%;
 	}
 </style>

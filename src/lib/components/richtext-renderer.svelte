@@ -47,8 +47,11 @@
 				{#if redir && redir.type === 'internal'}
 					<a href={redir.url} class="link">{segment.text}</a>
 				{:else}
-					<a target="_blank" href={redir ? redir.url : parsed.href} rel="noopener nofollow" class="link"
-						>{segment.text}</a
+					<a
+						target="publisherFrame"
+						href={redir ? redir.url : parsed.href}
+						// rel="noopener nofollow"
+						class="link">{segment.text}</a
 					>
 				{/if}
 			{/if}

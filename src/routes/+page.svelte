@@ -59,7 +59,7 @@
 	<link rel="alternate" href={data.feed.uri} />
 </svelte:head>
 
-<div style="margin-bottom: 0.8rem">
+<div style="margin: 10px">
 	<label>
 		<input type="checkbox" bind:checked={dedupe} />
 		De-duplicate articles

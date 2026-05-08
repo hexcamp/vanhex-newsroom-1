@@ -33,7 +33,7 @@
 		grid-template-areas: 'main';
 		justify-content: center;
 		gap: 8px;
-		margin: 24px auto 0;
+		/* margin: 24px auto 0; */
 		max-width: 480px;
 
 		@media (width >= 640px) {
@@ -65,7 +65,8 @@
 	}
 
 	.header {
-		padding-bottom: 24px;
+		/* padding-bottom: 24px; */
+		padding: 10px;
 	}
 
 	.header h1 {
